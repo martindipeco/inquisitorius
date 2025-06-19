@@ -14,9 +14,8 @@ import java.util.List;
 
 @Table(name = "usuarios")
 @Entity(name = "Usuario")
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
+
+
 @EqualsAndHashCode(of = "id")
 public class Usuario implements UserDetails {
 
@@ -26,9 +25,43 @@ public class Usuario implements UserDetails {
     private String login;
     private String clave;
 
+    // Constructor sin argumentos (¡clave para Hibernate!)
+    public Usuario() {
+    }
+
+    public Usuario(Long id, String login, String clave) {
+        this.id = id;
+        this.login = login;
+        this.clave = clave;
+    }
+
     // Custom constructor for login and clave
     public Usuario(String login, String clave) {
         this.login = login;
+        this.clave = clave;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setClave(String clave) {
         this.clave = clave;
     }
 
