@@ -1,3 +1,74 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind CSS v4 */
+@import "tailwindcss";
+
+/* Critical CSS optimizations */
+@layer base {
+  /* Optimize font loading */
+  html {
+    font-display: swap;
+  }
+  
+  /* Reduce layout shifts */
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Optimize images */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Prevent layout shifts for fonts */
+  h1, h2, h3, h4, h5, h6 {
+    font-display: swap;
+  }
+  
+  /* Optimize content visibility */
+  .content-visibility-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
+  }
+}
+
+@layer components {
+  /* Component-specific styles */
+  .btn-primary {
+    @apply bg-blue-600 text-white font-semibold py-3 px-6 rounded-[10px] hover:bg-blue-700 transition-all duration-200;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-[10px] focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+  }
+  
+  /* Prevent layout shifts for social buttons */
+  .social-button-grid {
+    min-height: 56px;
+    contain: layout style paint;
+  }
+}
+
+@layer utilities {
+  /* Utility classes */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  /* Performance optimizations */
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .contain-layout {
+    contain: layout;
+  }
+}
