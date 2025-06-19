@@ -1,6 +1,6 @@
 package com.inquisitorius.skillslink.infra.security;
 
-import com.inquisitorius.skillslink.domain.usuario.UsuarioRepository;
+import com.inquisitorius.skillslink.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

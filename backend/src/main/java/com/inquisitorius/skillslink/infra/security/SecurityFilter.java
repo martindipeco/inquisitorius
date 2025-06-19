@@ -1,6 +1,6 @@
 package com.inquisitorius.skillslink.infra.security;
 
-import com.inquisitorius.skillslink.domain.usuario.UsuarioRepository;
+import com.inquisitorius.skillslink.repository.UsuarioRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

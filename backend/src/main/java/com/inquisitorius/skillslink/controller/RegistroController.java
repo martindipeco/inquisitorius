@@ -2,7 +2,7 @@ package com.inquisitorius.skillslink.controller;
 
 import com.inquisitorius.skillslink.domain.usuario.DatosRegistrarUsuario;
 import com.inquisitorius.skillslink.domain.usuario.Usuario;
-import com.inquisitorius.skillslink.domain.usuario.UsuarioRepository;
+import com.inquisitorius.skillslink.repository.UsuarioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
