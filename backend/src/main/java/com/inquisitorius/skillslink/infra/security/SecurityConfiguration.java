@@ -37,7 +37,16 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/login", "/registro", "/api/mentorias","/api/certificaciones", "/api/cursos").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/mentorias", "/api/certificaciones/{id}", "/api/cursos/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                        //.requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                        // SpringDoc OpenAPI paths
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/webjars/**"
+                        ).permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
