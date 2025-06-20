@@ -1,7 +1,7 @@
 package com.inquisitorius.skillslink.controller;
 
-import com.inquisitorius.skillslink.domain.cursos.RequestCursoDto;
-import com.inquisitorius.skillslink.domain.cursos.ResponseCursoDto;
+import com.inquisitorius.skillslink.domain.cursos.DatosCreacionCurso;
+import com.inquisitorius.skillslink.domain.cursos.DatosRespuestaCurso;
 import com.inquisitorius.skillslink.service.CursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +17,13 @@ public class CursoController {
 
     // Obtener lista de cursos en formato DTO
     @GetMapping
-    public List<ResponseCursoDto> obtenerCursos() {
+    public List<DatosRespuestaCurso> obtenerCursos() {
         return cursoService.obtenerTodos();
     }
 
     // Crear un curso usando el DTO de solicitud
     @PostMapping
-    public ResponseCursoDto crearCurso(@RequestBody RequestCursoDto requestCursoDto) {
-        return cursoService.guardarCurso(requestCursoDto);
+    public DatosRespuestaCurso crearCurso(@RequestBody DatosCreacionCurso datosCreacionCurso) {
+        return cursoService.guardarCurso(datosCreacionCurso);
     }
 }

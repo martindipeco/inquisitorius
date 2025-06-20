@@ -11,53 +11,15 @@ public class Curso {
 
     private String titulo;
     private String descripcion;
-    private Integer duracionHoras; // En horas
+    private Integer duracionHoras;
 
     @Enumerated(EnumType.STRING)
-    private NivelCurso nivel; // INICIAL, INTERMEDIO, AVANZADO
+    private NivelCurso nivel;
 
-    //  Getters
-    public Long getId() {
-        return id;
-    }
+    // Constructor vacío (requerido por JPA)
+    public Curso() {}
 
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public Integer getDuracionHoras() {
-        return duracionHoras;
-    }
-
-    public NivelCurso getNivel() {
-        return nivel;
-    }
-
-    // Setters
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public void setDuracionHoras(Integer duracionHoras) {
-        this.duracionHoras = duracionHoras;
-    }
-
-    public void setNivel(NivelCurso nivel) {
-        this.nivel = nivel;
-    }
-
+    // Constructor completo (opcional)
     public Curso(Long id, String titulo, String descripcion, Integer duracionHoras, NivelCurso nivel) {
         this.id = id;
         this.titulo = titulo;
@@ -66,10 +28,46 @@ public class Curso {
         this.nivel = nivel;
     }
 
-    // Constructor sin argumentos (¡clave para Hibernate!)
-    public Curso() {
+    // Getters y setters
+    public Long getId() {
+        return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Integer getDuracionHoras() {
+        return duracionHoras;
+    }
+
+    public void setDuracionHoras(Integer duracionHoras) {
+        this.duracionHoras = duracionHoras;
+    }
+
+    public NivelCurso getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(NivelCurso nivel) {
+        this.nivel = nivel;
+    }
 }
 
 

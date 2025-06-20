@@ -32,7 +32,8 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers(HttpMethod.POST, "/login", "/registro", "/api/mentoria","/api/certificaciones", "/api/cursos").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/login", "/registro", "/api/mentorias","/api/certificaciones", "/api/cursos").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/mentorias", "/api/certificaciones/{id}", "/api/cursos").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated())

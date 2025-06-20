@@ -1,28 +1,30 @@
 package com.inquisitorius.skillslink.controller;
 
-import com.inquisitorius.skillslink.domain.mentoria.Mentoria;
-import com.inquisitorius.skillslink.domain.mentoria.RequestMentoriaDto;
-
+import com.inquisitorius.skillslink.domain.mentoria.DatosCreacionMentoria;
+import com.inquisitorius.skillslink.domain.mentoria.DatosRespuestaMentoria;
 import com.inquisitorius.skillslink.service.MentoriaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/mentoria")
+@RequestMapping("/api/mentorias")
 public class MentoriaController {
 
     @Autowired
     private MentoriaService mentoriaService;
 
-    @GetMapping
-    public List<Mentoria> obtenerMentorias() {
-        return mentoriaService.obtenerTodas();
+    // Endpoint para crear una nueva mentoría
+    @PostMapping
+    public DatosRespuestaMentoria crear(@RequestBody @Valid DatosCreacionMentoria datos) {
+        return mentoriaService.crearMentoria(datos);
     }
 
-    @PostMapping
-    public Mentoria crearMentoria(@RequestBody RequestMentoriaDto dto) {
-        return mentoriaService.guardarMentoriaDesdeDto(dto);
+    // Endpoint para listar todas las mentorías
+    @GetMapping
+    public List<DatosRespuestaMentoria> listar() {
+        return mentoriaService.listarMentorias();
     }
 }

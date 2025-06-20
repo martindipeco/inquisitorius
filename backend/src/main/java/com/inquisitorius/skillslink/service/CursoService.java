@@ -1,8 +1,8 @@
 package com.inquisitorius.skillslink.service;
 
 import com.inquisitorius.skillslink.domain.cursos.Curso;
-import com.inquisitorius.skillslink.domain.cursos.RequestCursoDto;
-import com.inquisitorius.skillslink.domain.cursos.ResponseCursoDto;
+import com.inquisitorius.skillslink.domain.cursos.DatosCreacionCurso;
+import com.inquisitorius.skillslink.domain.cursos.DatosRespuestaCurso;
 import com.inquisitorius.skillslink.repository.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,28 +17,32 @@ public class CursoService {
     private CursoRepository cursoRepository;
 
     // Obtener todos los cursos (convertidos a DTO de respuesta)
-    public List<ResponseCursoDto> obtenerTodos() {
-        return cursoRepository.findAll().stream().map(this::convertirACursoDto).collect(Collectors.toList());
+    public List<DatosRespuestaCurso> obtenerTodos() {
+        return cursoRepository.findAll().stream()
+                .map(this::convertirACursoDto)
+                .collect(Collectors.toList());
     }
 
     // Guardar curso desde el DTO de solicitud
-    public ResponseCursoDto guardarCurso(RequestCursoDto requestCursoDto) {
+    public DatosRespuestaCurso guardarCurso(DatosCreacionCurso datosCreacionCurso) {
         Curso curso = new Curso();
-        curso.setTitulo(requestCursoDto.getTitulo());
-        curso.setDescripcion(requestCursoDto.getDescripcion());
-        curso.setDuracionHoras(requestCursoDto.getDuracionHoras());
+        curso.setTitulo(datosCreacionCurso.titulo());
+        curso.setDescripcion(datosCreacionCurso.descripcion());
+        curso.setDuracionHoras(datosCreacionCurso.duracionHoras());
+        curso.setNivel(datosCreacionCurso.nivel());
 
         Curso cursoGuardado = cursoRepository.save(curso);
         return convertirACursoDto(cursoGuardado);
     }
 
     // Convertir entidad Curso a DTO de respuesta
-    private ResponseCursoDto convertirACursoDto(Curso curso) {
-        ResponseCursoDto dto = new ResponseCursoDto();
-        dto.setId(curso.getId());
-        dto.setTitulo(curso.getTitulo());
-        dto.setDescripcion(curso.getDescripcion());
-        dto.setDuracionHoras(curso.getDuracionHoras());
-        return dto;
+    private DatosRespuestaCurso convertirACursoDto(Curso curso) {
+        return new DatosRespuestaCurso(
+                curso.getId(),
+                curso.getTitulo(),
+                curso.getDescripcion(),
+                curso.getDuracionHoras(),
+                curso.getNivel()
+        );
     }
 }

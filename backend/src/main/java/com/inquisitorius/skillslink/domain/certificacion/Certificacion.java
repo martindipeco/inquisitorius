@@ -1,13 +1,11 @@
 package com.inquisitorius.skillslink.domain.certificacion;
 
+import com.inquisitorius.skillslink.domain.usuario.Usuario;
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
-@Data
-
 public class Certificacion {
 
     @Id
@@ -16,49 +14,62 @@ public class Certificacion {
 
     private String nombre;
     private String institucion;
-    private LocalDate fechaEmision; // fecha_emision en la base de datos
+    private LocalDate fechaEmision;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
+    public Certificacion() {}
+
+    public Certificacion(Long id, String nombre, String institucion, LocalDate fechaEmision, Usuario usuario) {
+        this.id = id;
+        this.nombre = nombre;
+        this.institucion = institucion;
+        this.fechaEmision = fechaEmision;
+        this.usuario = usuario;
+    }
+
+    // Getters y Setters
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public String getInstitucion() {
         return institucion;
-    }
-
-    public void setInstitucion(String institucion) {
-        this.institucion = institucion;
     }
 
     public LocalDate getFechaEmision() {
         return fechaEmision;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setInstitucion(String institucion) {
+        this.institucion = institucion;
+    }
+
     public void setFechaEmision(LocalDate fechaEmision) {
         this.fechaEmision = fechaEmision;
     }
 
-    public Certificacion(Long id, String nombre, String institucion, LocalDate fechaEmision) {
-        this.id = id;
-        this.nombre = nombre;
-        this.institucion = institucion;
-        this.fechaEmision = fechaEmision;
-    }
-
-    // Constructor sin argumentos (¡clave para Hibernate!)
-    public Certificacion() {
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }
 
