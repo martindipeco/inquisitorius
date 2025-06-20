@@ -63,4 +63,36 @@ public class MentoriaService {
                 mentoria.getEstado()
         );
     }
+    public DatosRespuestaMentoria obtenerPorId(Long id) {
+        Mentoria mentoria = mentoriaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Mentoría no encontrada"));
+        return convertirAMentoriaDto(mentoria);
+    }
+
+    public DatosRespuestaMentoria actualizarMentoria(Long id, DatosCreacionMentoria datos) {
+        Mentoria mentoria = mentoriaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Mentoría no encontrada"));
+
+        Usuario mentor = usuarioRepository.findById(datos.mentorId())
+                .orElseThrow(() -> new IllegalArgumentException("Mentor no encontrado"));
+        Usuario aprendiz = usuarioRepository.findById(datos.aprendizId())
+                .orElseThrow(() -> new IllegalArgumentException("Aprendiz no encontrado"));
+        Curso curso = cursoRepository.findById(datos.cursoId())
+                .orElseThrow(() -> new IllegalArgumentException("Curso no encontrado"));
+
+        mentoria.setMentor(mentor);
+        mentoria.setAprendiz(aprendiz);
+        mentoria.setCurso(curso);
+        mentoria.setFechaInicio(datos.fechaInicio());
+        mentoria.setEstado(datos.estado());
+
+        return convertirAMentoriaDto(mentoriaRepository.save(mentoria));
+    }
+
+    public void eliminarMentoria(Long id) {
+        if (!mentoriaRepository.existsById(id)) {
+            throw new IllegalArgumentException("Mentoría no encontrada");
+        }
+        mentoriaRepository.deleteById(id);
+    }
 }

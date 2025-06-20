@@ -16,14 +16,21 @@ public class CursoService {
     @Autowired
     private CursoRepository cursoRepository;
 
-    // Obtener todos los cursos (convertidos a DTO de respuesta)
+    // Obtener todos los cursos
     public List<DatosRespuestaCurso> obtenerTodos() {
         return cursoRepository.findAll().stream()
                 .map(this::convertirACursoDto)
                 .collect(Collectors.toList());
     }
 
-    // Guardar curso desde el DTO de solicitud
+    // Obtener curso por ID
+    public DatosRespuestaCurso obtenerPorId(Long id) {
+        Curso curso = cursoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Curso no encontrado"));
+        return convertirACursoDto(curso);
+    }
+
+    // Guardar curso nuevo
     public DatosRespuestaCurso guardarCurso(DatosCreacionCurso datosCreacionCurso) {
         Curso curso = new Curso();
         curso.setTitulo(datosCreacionCurso.titulo());
@@ -35,7 +42,29 @@ public class CursoService {
         return convertirACursoDto(cursoGuardado);
     }
 
-    // Convertir entidad Curso a DTO de respuesta
+    // Actualizar curso existente
+    public DatosRespuestaCurso actualizarCurso(Long id, DatosCreacionCurso datos) {
+        Curso curso = cursoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Curso no encontrado"));
+
+        curso.setTitulo(datos.titulo());
+        curso.setDescripcion(datos.descripcion());
+        curso.setDuracionHoras(datos.duracionHoras());
+        curso.setNivel(datos.nivel());
+
+        Curso actualizado = cursoRepository.save(curso);
+        return convertirACursoDto(actualizado);
+    }
+
+    // Eliminar curso
+    public void eliminarCurso(Long id) {
+        if (!cursoRepository.existsById(id)) {
+            throw new IllegalArgumentException("Curso no encontrado");
+        }
+        cursoRepository.deleteById(id);
+    }
+
+    // Conversión a DTO
     private DatosRespuestaCurso convertirACursoDto(Curso curso) {
         return new DatosRespuestaCurso(
                 curso.getId(),

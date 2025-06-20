@@ -41,6 +41,34 @@ public class CertificacionService {
                 .collect(Collectors.toList());
     }
 
+    public DatosRespuestaCertificacion obtenerPorId(Long id) {
+        Certificacion certificacion = certificacionRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Certificación no encontrada"));
+        return convertirADto(certificacion);
+    }
+
+    public DatosRespuestaCertificacion actualizarCertificacion(Long id, DatosCreacionCertificacion datos) {
+        Certificacion certificacion = certificacionRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Certificación no encontrada"));
+
+        Usuario usuario = usuarioRepository.findById(datos.usuarioId())
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        certificacion.setUsuario(usuario);
+        certificacion.setNombre(datos.nombre());
+        certificacion.setInstitucion(datos.institucion());
+        certificacion.setFechaEmision(datos.fechaEmision());
+
+        return convertirADto(certificacionRepository.save(certificacion));
+    }
+
+    public void eliminarCertificacion(Long id) {
+        if (!certificacionRepository.existsById(id)) {
+            throw new IllegalArgumentException("Certificación no encontrada");
+        }
+        certificacionRepository.deleteById(id);
+    }
+
     private DatosRespuestaCertificacion convertirADto(Certificacion certificacion) {
         return new DatosRespuestaCertificacion(
                 certificacion.getId(),
