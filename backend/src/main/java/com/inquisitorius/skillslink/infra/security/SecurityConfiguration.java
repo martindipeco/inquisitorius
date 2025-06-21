@@ -47,6 +47,10 @@ public class SecurityConfiguration {
                                 "/swagger-resources/**",
                                 "/webjars/**"
                         ).permitAll()
+                        // Role-based endpoints
+                        .requestMatchers(HttpMethod.GET,"/usuarios/**").hasAnyRole("USER", "ADMIN", "MENTOR")
+                        .requestMatchers(HttpMethod.PUT,"/usuarios/**").hasAnyRole("USER", "ADMIN", "MENTOR")
+                        .requestMatchers(HttpMethod.DELETE,"/usuarios/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

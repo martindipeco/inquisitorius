@@ -1,16 +1,14 @@
 package com.inquisitorius.skillslink.domain.usuario;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+
 
 @Table(name = "usuarios")
 @Entity(name = "Usuario")
@@ -25,20 +23,27 @@ public class Usuario implements UserDetails {
     private String login;
     private String clave;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "rol")
+    private Rol rol = Rol.USER;
+
     // Constructor sin argumentos (¡clave para Hibernate!)
     public Usuario() {
     }
 
-    public Usuario(Long id, String login, String clave) {
+    //constructor con todos los argumentos
+    public Usuario(Long id, String login, String clave, Rol rol) {
         this.id = id;
         this.login = login;
         this.clave = clave;
+        this.rol = rol;
     }
 
     // Custom constructor for login and clave
     public Usuario(String login, String clave) {
         this.login = login;
         this.clave = clave;
+        this.rol = Rol.USER;
     }
 
     public Long getId() {
@@ -63,6 +68,10 @@ public class Usuario implements UserDetails {
 
     public void setClave(String clave) {
         this.clave = clave;
+    }
+
+    public Rol getRol() {
+        return rol != null ? rol : rol.USER;
     }
 
     @Override
@@ -98,5 +107,10 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
+    }
+
+    // Helper method for JWT claims
+    public String getRoleName() {
+        return rol.name();
     }
 }

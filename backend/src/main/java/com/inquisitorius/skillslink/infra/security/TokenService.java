@@ -26,9 +26,10 @@ public class TokenService {
         try
         {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret); //secreto para validar firma
-            return JWT.create().withIssuer("voll med")
+            return JWT.create().withIssuer("SkillsLink")
                     .withSubject(usuario.getLogin())
                     .withClaim("id", usuario.getId())
+                    .withClaim("role", usuario.getRol().name()) // Single role
                     .withExpiresAt(generarFechaExpiracion())
                     .sign(algorithm); //creo un string
         }
@@ -68,4 +69,61 @@ public class TokenService {
         return verifier.getSubject();
     }
 
+    // METHOD: Extract role from token
+    public String getRoleFromToken(String token) {
+        if(token == null) {
+            throw new RuntimeException("Token is null");
+        }
+
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(apiSecret);
+            DecodedJWT verifier = JWT.require(algorithm)
+                    .withIssuer("SkillsLink")
+                    .build()
+                    .verify(token);
+
+            return verifier.getClaim("role").asString();
+        } catch (JWTVerificationException exception) {
+            System.out.println(exception.getMessage());
+            throw new RuntimeException("Invalid token", exception);
+        }
+    }
+
+    // METHOD: Extract user ID from token (useful for authorization)
+    public Long getUserIdFromToken(String token) {
+        if(token == null) {
+            throw new RuntimeException("Token is null");
+        }
+
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(apiSecret);
+            DecodedJWT verifier = JWT.require(algorithm)
+                    .withIssuer("SkillsLink")
+                    .build()
+                    .verify(token);
+
+            return verifier.getClaim("id").asLong();
+        } catch (JWTVerificationException exception) {
+            System.out.println(exception.getMessage());
+            throw new RuntimeException("Invalid token", exception);
+        }
+    }
+
+    // Helper method to validate token and return all claims
+    public DecodedJWT validateAndDecodeToken(String token) {
+        if(token == null) {
+            throw new RuntimeException("Token is null");
+        }
+
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(apiSecret);
+            return JWT.require(algorithm)
+                    .withIssuer("SkillsLink")
+                    .build()
+                    .verify(token);
+        } catch (JWTVerificationException exception) {
+            System.out.println(exception.getMessage());
+            throw new RuntimeException("Invalid token", exception);
+        }
+    }
 }
