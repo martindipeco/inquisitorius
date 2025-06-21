@@ -1,8 +1,7 @@
 package com.inquisitorius.skillslink.controller;
 
-import com.inquisitorius.skillslink.domain.usuario.Usuario;
-import com.inquisitorius.skillslink.dto.usuario.UsuarioRequestDto;
-import com.inquisitorius.skillslink.dto.usuario.UsuarioResponseDto;
+import com.inquisitorius.skillslink.domain.usuario.DatosPedidoUsuario;
+import com.inquisitorius.skillslink.domain.usuario.DatosRespuestaUsuario;
 import com.inquisitorius.skillslink.repository.UsuarioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,28 +23,28 @@ public class UsuarioController {
     private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping
-    public ResponseEntity<List<UsuarioResponseDto>> listarUsuarios() {
-        List<UsuarioResponseDto> usuarios = usuarioRepository.findAll().stream()
-                .map(usuario -> new UsuarioResponseDto(usuario.getId(), usuario.getLogin()))
+    public ResponseEntity<List<DatosRespuestaUsuario>> listarUsuarios() {
+        List<DatosRespuestaUsuario> usuarios = usuarioRepository.findAll().stream()
+                .map(usuario -> new DatosRespuestaUsuario(usuario.getId(), usuario.getLogin()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(usuarios);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioResponseDto> obtenerUsuario(@PathVariable Long id) {
+    public ResponseEntity<DatosRespuestaUsuario> obtenerUsuario(@PathVariable Long id) {
         return usuarioRepository.findById(id)
-                .map(usuario -> ResponseEntity.ok(new UsuarioResponseDto(usuario.getId(), usuario.getLogin())))
+                .map(usuario -> ResponseEntity.ok(new DatosRespuestaUsuario(usuario.getId(), usuario.getLogin())))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioResponseDto> actualizarUsuario(@PathVariable Long id, @RequestBody @Valid UsuarioRequestDto datosActualizados) {
+    public ResponseEntity<DatosRespuestaUsuario> actualizarUsuario(@PathVariable Long id, @RequestBody @Valid DatosPedidoUsuario datosActualizados) {
         return usuarioRepository.findById(id)
                 .map(usuario -> {
                     usuario.setLogin(datosActualizados.getLogin());
                     usuario.setClave(passwordEncoder.encode(datosActualizados.getClave()));
                     usuarioRepository.save(usuario);
-                    return ResponseEntity.ok(new UsuarioResponseDto(usuario.getId(), usuario.getLogin()));
+                    return ResponseEntity.ok(new DatosRespuestaUsuario(usuario.getId(), usuario.getLogin()));
                 }).orElse(ResponseEntity.notFound().build());
     }
 

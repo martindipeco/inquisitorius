@@ -1,8 +1,8 @@
-package com.inquisitorius.skillslink.dto.usuario;
+package com.inquisitorius.skillslink.domain.usuario;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class UsuarioRequestDto {
+public class DatosPedidoUsuario {
 
     @NotBlank
     private String login;

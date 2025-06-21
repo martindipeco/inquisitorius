@@ -1,10 +1,10 @@
-package com.inquisitorius.skillslink.dto.usuario;
+package com.inquisitorius.skillslink.domain.usuario;
 
-public class UsuarioResponseDto {
+public class DatosRespuestaUsuario {
     private Long id;
     private String login;
 
-    public UsuarioResponseDto(Long id, String login) {
+    public DatosRespuestaUsuario(Long id, String login) {
         this.id = id;
         this.login = login;
     }
