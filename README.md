@@ -87,22 +87,32 @@ npm run lint
 
 ```
 src/
-├── assets/           # Recursos estáticos
-│   ├── images/      # Imágenes del proyecto
-│   └── icons/       # Iconos y SVGs
-├── components/      # Componentes reutilizables
-│   ├── Button.tsx   # Botón genérico
-│   ├── Input.tsx    # Input genérico
-│   └── SocialButton.tsx # Botón de redes sociales
-├── pages/           # Componentes de página
-│   └── LoginPage.tsx # Página de login
-├── hooks/           # Custom hooks de React
-├── services/        # Servicios y llamadas a API
-├── utils/           # Funciones utilitarias
-├── types/           # Definiciones de tipos TypeScript
-│   └── loginSchema.ts # Esquema de validación
-├── styles/          # Estilos globales y temas
-└── context/         # Contextos de React
+├── assets/           # Recursos estáticos (imágenes, fuentes, etc.)
+├── components/       # Componentes React reutilizables
+│   ├── Button.tsx
+│   ├── Curso.tsx
+│   ├── Footer.tsx
+│   ├── ImageWithFallback.tsx
+│   ├── Input.tsx
+│   ├── Navbar.tsx
+│   └── SocialButton.tsx
+├── mocks/            # Datos de prueba para simular APIs
+│   └── cursos.json
+├── pages/            # Componentes que representan páginas completas
+│   ├── HomePage.tsx
+│   ├── LoginPage.tsx
+│   └── NotFoundPage.tsx
+├── routes/           # Lógica y configuración de enrutamiento
+│   ├── index.tsx
+│   ├── ProtectedRoute.tsx
+│   └── routes.ts
+├── services/         # Lógica para interactuar con APIs externas
+│   └── cursosService.ts
+├── types/            # Definiciones de tipos y esquemas de TypeScript
+│   └── loginSchema.ts
+├── App.tsx           # Componente raíz de la aplicación
+├── index.css         # Estilos globales y de Tailwind
+└── main.tsx          # Punto de entrada principal de la aplicación
 ```
 
 ## 📦 Dependencias Principales
