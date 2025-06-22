@@ -47,6 +47,23 @@
     min-height: 56px;
     contain: layout style paint;
   }
+  
+  /* Skeleton loading */
+  .skeleton {
+    @apply bg-gray-200 animate-pulse rounded;
+  }
+  
+  /* Card optimizada */
+  .card-optimized {
+    @apply bg-white rounded-lg shadow-md border border-gray-100 overflow-hidden;
+    contain: layout style paint;
+  }
+  
+  /* Grid optimizado */
+  .grid-optimized {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+    contain: layout style;
+  }
 }
 
 @layer utilities {
@@ -70,5 +87,56 @@
   
   .contain-layout {
     contain: layout;
+  }
+  
+  /* Prevenir layout shifts */
+  .content-visibility-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
+  }
+  
+  /* Optimizar animaciones */
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: .5;
+    }
+  }
+  
+  /* Mejorar rendimiento de transiciones */
+  .transition-opacity {
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  /* Optimizar imágenes */
+  img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+  
+  /* Prevenir layout shifts en contenedores */
+  .layout-stable {
+    contain: layout style paint;
+  }
+  
+  /* Optimizar scroll */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+  
+  /* Mejorar performance de hover */
+  .hover-lift {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   }
 }
