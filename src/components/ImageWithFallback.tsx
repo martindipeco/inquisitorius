@@ -1,89 +1,89 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Icon } from '@iconify/react';
+
+type ImageSize = 'sm' | 'md' | 'lg' | 'xl';
+type ImageShape = 'rounded' | 'rounded-full';
 
 interface ImageWithFallbackProps {
-  src: string;
+  src?: string | null;
   alt: string;
+  size?: ImageSize;
+  shape?: ImageShape;
   className?: string;
   skeletonClassName?: string;
-  fallbackIconClassName?: string;
-  size?: 'sm' | 'md' | 'lg';
-  shape?: 'rounded' | 'rounded-full' | 'square';
 }
+
+const sizeClasses: Record<ImageSize, string> = {
+  sm: 'w-8 h-8',
+  md: 'w-12 h-12',
+  lg: 'w-16 h-16',
+  xl: 'w-24 h-24',
+};
+
+const iconSizeClasses: Record<ImageSize, string> = {
+  sm: 'w-4 h-4',
+  md: 'w-6 h-6',
+  lg: 'w-8 h-8',
+  xl: 'w-12 h-12',
+};
 
 export const ImageWithFallback = ({
   src,
   alt,
-  className = '',
-  skeletonClassName = '',
-  fallbackIconClassName = '',
   size = 'md',
-  shape = 'rounded'
+  shape = 'rounded',
+  className = '',
+  skeletonClassName = ''
 }: ImageWithFallbackProps) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
-  // Configuración de tamaños
-  const sizeConfig = {
-    sm: { container: 'w-6 h-6', icon: 'w-3 h-3' },
-    md: { container: 'w-16 h-16', icon: 'w-8 h-8' },
-    lg: { container: 'w-24 h-24', icon: 'w-12 h-12' }
-  };
+  useEffect(() => {
+    if (!src) {
+      setIsLoading(false);
+      setHasError(true);
+      return;
+    }
 
-  // Configuración de formas
-  const shapeConfig = {
-    'rounded': 'rounded',
-    'rounded-full': 'rounded-full',
-    'square': 'rounded-none'
-  };
+    setIsLoading(true);
+    setHasError(false);
+    const img = new Image();
+    img.src = src;
+    img.onload = () => {
+      setIsLoading(false);
+    };
+    img.onerror = () => {
+      setIsLoading(false);
+      setHasError(true);
+    };
+  }, [src]);
 
-  const handleImageLoad = () => {
-    setImageLoaded(true);
-  };
+  const containerSizeClass = sizeClasses[size];
+  const shapeClass = shape === 'rounded-full' ? 'rounded-full' : 'rounded-lg';
 
-  const handleImageError = () => {
-    setImageError(true);
-    setImageLoaded(true);
-  };
+  if (isLoading) {
+    return (
+      <div
+        className={`bg-gray-200 animate-pulse ${containerSizeClass} ${shapeClass} ${skeletonClassName}`}
+      />
+    );
+  }
 
-  const containerSize = sizeConfig[size].container;
-  const iconSize = sizeConfig[size].icon;
-  const shapeClass = shapeConfig[shape];
+  if (hasError) {
+    return (
+      <div
+        className={`bg-gray-100 flex items-center justify-center ${containerSizeClass} ${shapeClass} ${skeletonClassName}`}
+      >
+        <Icon icon="mdi:image-off-outline" className={`text-gray-400 ${iconSizeClasses[size]}`} />
+      </div>
+    );
+  }
 
   return (
-    <div className={`relative ${containerSize} flex-shrink-0`}>
-      {/* Skeleton loading - solo se muestra cuando no está cargado */}
-      {!imageLoaded && !imageError && (
-        <div className={`absolute inset-0 bg-gray-200 ${shapeClass} animate-pulse ${skeletonClassName}`}></div>
-      )}
-      
-      {/* Imagen */}
-      <img
-        src={src}
-        alt={alt}
-        className={`${containerSize} ${shapeClass} object-cover transition-opacity duration-300 ${
-          imageLoaded ? 'opacity-100' : 'opacity-0'
-        } ${className}`}
-        onLoad={handleImageLoad}
-        onError={handleImageError}
-        loading="lazy"
-      />
-      
-      {/* Fallback icon - solo se muestra cuando hay error */}
-      {imageError && (
-        <div className={`absolute inset-0 bg-gray-300 ${shapeClass} flex items-center justify-center`}>
-          <svg 
-            className={`${iconSize} text-gray-500 ${fallbackIconClassName}`} 
-            fill="currentColor" 
-            viewBox="0 0 20 20"
-          >
-            <path 
-              fillRule="evenodd" 
-              d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" 
-              clipRule="evenodd" 
-            />
-          </svg>
-        </div>
-      )}
-    </div>
+    <img
+      src={src ?? ''}
+      alt={alt}
+      className={`${containerSizeClass} ${shapeClass} object-cover ${className}`}
+    />
   );
 }; 

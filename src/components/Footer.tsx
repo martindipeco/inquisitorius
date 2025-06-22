@@ -7,7 +7,7 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Información del proyecto */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Mentora</h3>
+            <h2 className="text-xl font-bold mb-4">Mentora</h2>
             <p className="text-gray-300 mb-4">
               Proyecto desarrollado durante la hackathon de Alura. 
               Una plataforma educativa innovadora para el aprendizaje online.
@@ -27,7 +27,7 @@ export const Footer = () => {
 
           {/* Equipo de desarrollo */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Equipo de Desarrollo</h3>
+            <h2 className="text-xl font-bold mb-4">Equipo de Desarrollo</h2>
             <div className="space-y-4 text-gray-300">
               {/* Frontend */}
               <div>

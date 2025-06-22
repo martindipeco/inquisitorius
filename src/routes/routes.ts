@@ -8,6 +8,7 @@ export const PUBLIC_ROUTES = {
 export const PROTECTED_ROUTES = {
   DASHBOARD: '/dashboard',
   PROFILE: '/profile',
+  EDIT_PROFILE: '/profile/edit',
   COURSES: '/courses',
   SETTINGS: '/settings',
 } as const;
