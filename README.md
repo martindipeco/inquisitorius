@@ -1,114 +1,161 @@
- 
+# 🚀 Pasos para Iniciar el Servidor - API SkillsLink
 
-# Plataforma de Mentoría y Certificaciones – **Mentora**
+## 📋 Requisitos Previos
 
-**Mentora** es una plataforma web que impulsa el crecimiento académico y personal a través de **cursos**, **mentorías personalizadas** y **certificaciones verificadas**. Desarrollada en **Java con Spring Boot**, está orientada a facilitar la conexión entre aprendices y mentores, estructurar procesos formativos y reconocer habilidades adquiridas.
+### Software Necesario
+- **Java 17** (JDK)
+- **Maven 3.6+**
+- **MySQL 8.0+**
+- **IntelliJ IDEA** (recomendado)
+
+### Verificar Instalaciones
+```bash
+java -version    # Debe mostrar Java 17
+mvn -version     # Debe mostrar Maven 3.6+
+mysql --version  # Debe mostrar MySQL 8.0+
+```
+
+## 🗄️ Configuración de Base de Datos
+
+### 1. Iniciar MySQL
+```bash
+# En Windows (si está instalado como servicio)
+net start mysql
+
+# En macOS con Homebrew
+brew services start mysql
+
+# En Linux
+sudo systemctl start mysql
+```
+
+### 2. Crear Usuario y Base de Datos (Opcional)
+```sql
+-- Conectarse a MySQL como administrador
+mysql -u root -p
+
+-- La base de datos se creará automáticamente por la configuración
+-- spring.datasource.url=...?createDatabaseIfNotExist=true
+```
+
+## ⚙️ Configuración de Variables de Entorno
+
+### Opción 1: Variables de Sistema
+```bash
+# Windows (CMD)
+set DB_PASSWORD=root
+set JWT_SECRET=123456
+
+# Windows (PowerShell)
+$env:DB_PASSWORD="root"
+$env:JWT_SECRET="123456"
+
+# macOS/Linux
+export DB_PASSWORD=root
+export JWT_SECRET=123456
+```
+
+### Opción 2: Configuración en IntelliJ IDEA
+1. Abrir **Run/Debug Configurations**
+2. Seleccionar la configuración de **SkillslinkApplication**
+3. En **Environment Variables** agregar:
+   - `DB_PASSWORD=root`
+   - `JWT_SECRET=123456`
+
+## 📦 Instalación y Ejecución
+
+### 1. Clonar y Acceder al Proyecto
+```bash
+git clone [URL_DEL_REPOSITORIO]
+cd skillslink-api
+```
+
+### 2. Instalar Dependencias
+```bash
+mvn clean install
+```
+
+### 3. Ejecutar la Aplicación
+
+#### Opción A: Desde IntelliJ IDEA
+1. Abrir el proyecto en **IntelliJ IDEA**
+2. Localizar `SkillslinkApplication.java`
+3. Click derecho → **Run 'SkillslinkApplication'**
+
+#### Opción B: Desde Terminal
+```bash
+# Ejecutar directamente con Maven
+mvn spring-boot:run
+
+# O compilar y ejecutar el JAR
+mvn clean package
+java -jar target/skillslink-[VERSION].jar
+```
+
+## ✅ Verificación
+
+### El servidor debería iniciar exitosamente y mostrar:
+```
+Started SkillslinkApplication in X.XXX seconds (JVM running for X.XXX)
+```
+
+### Verificar que la aplicación esté corriendo:
+- **URL Base**: `http://localhost:3000`
+- **Puerto**: 3000
+- **Base de Datos**: `skilllink_db` (se crea automáticamente)
+
+### Endpoints de Prueba
+```bash
+# Verificar que el servidor responda
+curl http://localhost:3000
+
+# O abrir en el navegador
+http://localhost:3000
+```
+
+## 🔧 Troubleshooting
+
+### Problemas Comunes
+
+#### Error de Conexión a MySQL
+```
+Error: Cannot load driver class: com.mysql.cj.jdbc.Driver
+```
+**Solución**: Verificar que MySQL esté corriendo y las credenciales sean correctas.
+
+#### Puerto 3000 en Uso
+```
+Error: Port 3000 is already in use
+```
+**Solución**: Cambiar el puerto en `application.properties` o terminar el proceso que usa el puerto.
+
+#### Variables de Entorno No Encontradas
+```
+Error: Could not resolve placeholder 'DB_PASSWORD'
+```
+**Solución**: Verificar que las variables de entorno estén configuradas correctamente.
+
+## 📁 Estructura del Proyecto
+```
+skillslink-api/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/.../SkillslinkApplication.java
+│   │   └── resources/
+│   │       └── application.properties
+├── target/
+├── pom.xml
+└── README.md
+```
+
+## 📝 Notas Adicionales
+
+- La aplicación usa **Spring Boot 3.3.0** con **Java 17**
+- Hibernate está configurado en modo `update` (creará/actualizará tablas automáticamente)
+- Los logs SQL están habilitados para debugging
+- El servidor corre en el puerto **3000** (no el 8080 por defecto)
 
 ---
 
-## 🧠 Visión del Proyecto
-
-Diseñar un sistema **accesible**, **seguro** y **escalable**, pensado para fomentar:
-
-- El acceso a contenidos formativos mediante cursos  
-- La gestión de procesos de mentoría individualizados  
-- La emisión de certificaciones validadas por mentores o administradores  
-
-Este backend constituye el **MVP (Producto Mínimo Viable)** de una plataforma comunitaria enfocada en la **colaboración**, la **trazabilidad del aprendizaje** y la **motivación continua**.
-
----
-
-## 💡 Enfoque de Desarrollo
-
-Desarrollo backend con foco en:
-
-- Educación y mentoría como motores de transformación  
-- Accesibilidad y estructura semántica clara  
-- Integración de tecnología y cultura para potenciar el aprendizaje significativo
-
----
-
-## 🔧 Tecnologías utilizadas
-
-- Java 17+  
-- Spring Boot  
-- Spring Security + JWT  
-- MySQL  
-- Maven  
-- JPA / Hibernate  
-- Insomnia para pruebas
-
----
-
-## 🧩 Funcionalidades Implementadas
-
-### 📚 Cursos
-- Crear, listar, editar y eliminar cursos  
-- Asignar mentorías a cursos  
-- Manejar niveles del curso: `INICIAL`, `INTERMEDIO`, `AVANZADO`
-
-### 🤝 Mentorías
-- Crear mentorías entre usuarios  
-- Asociar mentor y aprendiz a un curso  
-- Manejar estados como `EN_CURSO`, `FINALIZADA`, `CANCELADA`
-
-### 🏅 Certificaciones
-- Registrar certificaciones con nombre, institución y fecha  
-- Asociar a un usuario validado
-
----
-
-## 🔐 Seguridad y Accesos
-
-- Registro y login con JWT  
-- Roles definidos: `ADMIN`, `MENTOR`, `USER`  
-- Control de acceso con `@PreAuthorize`  
-- Protección de endpoints por perfil de usuario
-
-🌐 Endpoints REST
-
-| Módulo          | Método  | Ruta                            | Roles autorizados     |
-|-----------------|---------|----------------------------------|------------------------|
-| **Cursos**      | POST    | `/api/cursos`                   | ADMIN                 |
-|                 | GET     | `/api/cursos`                   | Todos los roles       |
-|                 | PUT     | `/api/cursos/{id}`              | ADMIN                 |
-|                 | DELETE  | `/api/cursos/{id}`              | ADMIN                 |
-| **Mentorías**   | POST    | `/api/mentorias`                | ADMIN, MENTOR         |
-|                 | GET     | `/api/mentorias`                | Todos los roles       |
-|                 | PUT     | `/api/mentorias/{id}`           | ADMIN, MENTOR         |
-|                 | DELETE  | `/api/mentorias/{id}`           | ADMIN                 |
-| **Certificaciones** | POST    | `/api/certificaciones`           | ADMIN, MENTOR         |
-|                 | GET     | `/api/certificaciones`          | Todos los roles       |
-|                 | PUT     | `/api/certificaciones/{id}`     | ADMIN, MENTOR         |
-|                 | DELETE  | `/api/certificaciones/{id}`     | ADMIN                 |
-
-
-
-✅ Acciones Protegidas por Rol
-| Módulo          | Roles autorizados | Acciones protegidas                    |
-|-----------------|-------------------|----------------------------------------|
-| Cursos          | ADMIN             | Crear, editar, eliminar                |
-| Mentorías       | ADMIN, MENTOR     | Crear, editar (solo ADMIN elimina)     |
-| Certificaciones | ADMIN, MENTOR     | Crear, editar (solo ADMIN elimina)     |
-
-Cada módulo utiliza DTOs descriptivos en castellano y validaciones semánticas con @Valid.
-
-## 🧪 Pruebas con Insomnia
-
-Se testearon funcionalidades clave mediante una colección personalizada:
-
-- Autenticación y generación de JWT  
-- Validación de roles y protección de endpoints (`403 Forbidden`)  
-- Creación, lectura, actualización y eliminación de entidades  
-- Casos de error: usuario/curso inexistente, datos inválidos  
-
-📎 **Colección disponible en:** `skillslink-insomnia.json`
-
----
-
-## 🔮 ¿Por qué destaca este proyecto?
-
-- Código **modular, limpio y fácilmente mantenible**  
-- Arquitectura pensada para **escalabilidad y expansión**  
-- Enfoque pedagógico que resalta la **mentoría y la certificación** como motores de crecimiento humano y profesional
-
+¿Necesitas ayuda con algún paso específico? ¡No dudes en preguntar! 🤝
