@@ -1,0 +1,11 @@
+{
+  "users": [
+    {
+      "id": "usr_1",
+      "nombre": "Sofía Martínez",
+      "email": "sofia.martinez@mentora.com",
+      "bio": "Diseñadora UI/UX con pasión por crear interfaces intuitivas y estéticamente agradables. Entusiasta de las metodologías ágiles y el diseño centrado en el usuario.",
+      "avatarUrl": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face"
+    }
+  ]
+} 
