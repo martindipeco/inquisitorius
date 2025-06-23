@@ -83,7 +83,7 @@ src/
 ├── App.tsx
 ├── main.tsx
 └── index.css
-
+```
 ---
 
 ## 🎨 Estilo y Diseño (Frontend)
