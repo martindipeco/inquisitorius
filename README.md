@@ -287,7 +287,6 @@ Se utilizó **Insomnia** para validar los principales flujos de autenticación, 
 
 La colección completa de pruebas está disponible en el archivo:
 
-```text
 skillslink-insomnia.json
 
 ---
