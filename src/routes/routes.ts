@@ -11,6 +11,12 @@ export const PROTECTED_ROUTES = {
   EDIT_PROFILE: '/profile/edit',
   COURSES: '/courses',
   SETTINGS: '/settings',
+  CONFIGURACIONES: '/configuraciones',
+  CONFIGURACIONES_PERFIL: '/configuraciones/perfil',
+  CONFIGURACIONES_CURSOS: '/configuraciones/cursos',
+  CONFIGURACIONES_CERTIFICACIONES: '/configuraciones/certificaciones',
+  CONFIGURACIONES_SEGURIDAD: '/configuraciones/seguridad',
+  CONFIGURACIONES_NOTIFICACIONES: '/configuraciones/notificaciones',
 } as const;
 
 // Rutas de error
