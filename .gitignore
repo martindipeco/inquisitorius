@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Lighthouse reports
+/.unlighthouse
+.lighthouse
+lighthouse-reports/
+unlighthouse-reports/
+*.lighthouse.html
+*.lighthouse.json

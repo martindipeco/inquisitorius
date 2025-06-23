@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
 import { Curso as CursoComponent } from '../components/Curso';
 import { Footer } from '../components/Footer';
 import { cursosService, type Curso } from '../services/cursosService';
+import { PROTECTED_ROUTES } from '../routes/routes';
 
 // Componente de skeleton para evitar layout shifts
 const CursoSkeleton = () => (
@@ -29,6 +31,7 @@ const CursoSkeleton = () => (
 );
 
 export const HomePage = () => {
+  const navigate = useNavigate();
   const [cursos, setCursos] = useState<Curso[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -74,6 +77,10 @@ export const HomePage = () => {
     // Aquí puedes agregar navegación al detalle del curso
   };
 
+  const handleConfiguracionesClick = () => {
+    navigate(PROTECTED_ROUTES.CONFIGURACIONES_PERFIL);
+  };
+
   // Renderizar skeletons mientras carga
   const renderSkeletons = () => (
     <div className="grid-optimized">
@@ -103,7 +110,11 @@ export const HomePage = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
-      <Navbar cursos={cursos} onCursoSelect={handleCursoSelect} />
+      <Navbar 
+        cursos={cursos} 
+        onCursoSelect={handleCursoSelect} 
+        onConfiguracionesClick={handleConfiguracionesClick}
+      />
       <main className="flex-1">
         {/* Hero Section */}
         <section className="bg-white py-12 sm:py-16 lg:py-20">

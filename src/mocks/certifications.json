@@ -1,0 +1,64 @@
+{
+  "certifications": [
+    {
+      "id": "1",
+      "nombre": "React Fundamentals",
+      "fechaObtencion": "2024-01-15",
+      "imagen": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
+      "logoCurso": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+      "codigoVerificacion": "CERT-REACT-2024-001",
+      "horasCompletadas": 24,
+      "instructor": "María González"
+    },
+    {
+      "id": "2",
+      "nombre": "TypeScript Avanzado",
+      "fechaObtencion": "2023-12-20",
+      "imagen": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=face",
+      "logoCurso": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+      "codigoVerificacion": "CERT-TS-2023-045",
+      "horasCompletadas": 32,
+      "instructor": "Carlos Rodríguez"
+    },
+    {
+      "id": "3",
+      "nombre": "Node.js Backend",
+      "fechaObtencion": "2023-06-10",
+      "imagen": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
+      "logoCurso": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+      "codigoVerificacion": "CERT-NODE-2023-123",
+      "horasCompletadas": 28,
+      "instructor": "Ana Martínez"
+    },
+    {
+      "id": "4",
+      "nombre": "DevOps Essentials",
+      "fechaObtencion": "2023-12-20",
+      "imagen": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+      "logoCurso": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+      "codigoVerificacion": "CERT-DEVOPS-2023-078",
+      "horasCompletadas": 36,
+      "instructor": "Sofia López"
+    },
+    {
+      "id": "5",
+      "nombre": "UI/UX Design",
+      "fechaObtencion": "2023-09-15",
+      "imagen": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+      "logoCurso": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
+      "codigoVerificacion": "CERT-UX-2023-092",
+      "horasCompletadas": 20,
+      "instructor": "Luis Fernández"
+    },
+    {
+      "id": "6",
+      "nombre": "Machine Learning Básico",
+      "fechaObtencion": "2024-01-10",
+      "imagen": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+      "logoCurso": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+      "codigoVerificacion": "CERT-ML-2024-015",
+      "horasCompletadas": 40,
+      "instructor": "Diego Silva"
+    }
+  ]
+} 
