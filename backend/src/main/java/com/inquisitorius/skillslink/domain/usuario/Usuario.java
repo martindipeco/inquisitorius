@@ -25,7 +25,7 @@ public class Usuario implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "rol")
-    private Rol rol = Rol.USER;
+    private Rol rol;
 
     // Constructor sin argumentos (¡clave para Hibernate!)
     public Usuario() {
@@ -43,7 +43,6 @@ public class Usuario implements UserDetails {
     public Usuario(String login, String clave) {
         this.login = login;
         this.clave = clave;
-        this.rol = Rol.USER;
     }
 
     public Long getId() {
@@ -71,12 +70,16 @@ public class Usuario implements UserDetails {
     }
 
     public Rol getRol() {
-        return rol != null ? rol : rol.USER;
+        return rol != null ? rol : Rol.USER;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + (rol != null ? rol.name() : "USER")));
     }
 
     @Override

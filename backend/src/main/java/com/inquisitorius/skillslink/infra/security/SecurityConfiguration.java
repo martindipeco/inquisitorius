@@ -34,7 +34,7 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers(HttpMethod.POST, "/login", "/registro", "/api/mentorias","/api/certificaciones", "/api/cursos","/api/mensajes").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/login", "/registro").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/mentorias", "/api/certificaciones/{id}", "/api/cursos/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         //.requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
@@ -48,6 +48,18 @@ public class SecurityConfiguration {
                                 "/webjars/**"
                         ).permitAll()
                         // Role-based endpoints
+
+                        // CREACIÓN de recursos protegida
+                        .requestMatchers(HttpMethod.POST, "/api/cursos").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/mentorias", "/api/certificaciones").hasAnyRole("ADMIN", "MENTOR")
+
+                        // ACTUALIZACIÓN de recursos
+                        .requestMatchers(HttpMethod.PUT, "/api/cursos/").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/mentorias/", "/api/certificaciones/").hasAnyRole("ADMIN", "MENTOR")
+
+                        // ELIMINACIÓN de recursos
+                        .requestMatchers(HttpMethod.DELETE, "/api/cursos/", "/api/mentorias/", "/api/certificaciones/").hasRole("ADMIN")
+
                         .requestMatchers(HttpMethod.GET,"/usuarios/**").hasAnyRole("USER", "ADMIN", "MENTOR")
                         .requestMatchers(HttpMethod.PUT,"/usuarios/**").hasAnyRole("USER", "ADMIN", "MENTOR")
                         .requestMatchers(HttpMethod.DELETE,"/usuarios/**").hasRole("ADMIN")
