@@ -43,7 +43,6 @@ public class Usuario implements UserDetails {
     public Usuario(String login, String clave) {
         this.login = login;
         this.clave = clave;
-        //this.rol = Rol.USER;
     }
 
     public Long getId() {

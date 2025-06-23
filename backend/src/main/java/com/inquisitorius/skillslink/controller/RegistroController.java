@@ -29,7 +29,7 @@ public class RegistroController {
         }
 
         String encryptedPassword = passwordEncoder.encode(datosRegistrarUsuario.clave());
-        Usuario nuevoUsuario = new Usuario(null, datosRegistrarUsuario.login(), encryptedPassword, datosRegistrarUsuario.rol());
+        Usuario nuevoUsuario = new Usuario(datosRegistrarUsuario.login(), encryptedPassword);
         usuarioRepository.save(nuevoUsuario);
 
         return ResponseEntity.ok().build();
