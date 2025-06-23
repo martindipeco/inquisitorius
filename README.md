@@ -171,7 +171,7 @@ Inquisitorius implementa un sistema de control de acceso basado en roles para of
 - Controla acceso a endpoints y gestiona integridad de datos del sistema
 
 ---
-```bash
+
 ## 🚀 Instalación y Ejecución del Proyecto (Frontend)
 
 Sigue los siguientes pasos para correr la aplicación en modo de desarrollo:
@@ -187,7 +187,7 @@ npm install
 
 # Inicia el servidor de desarrollo
 npm run dev
-```
+
 ---
 
 ## 🧩 Funcionalidades Implementadas en el Backend
