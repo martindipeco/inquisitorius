@@ -177,7 +177,7 @@ Inquisitorius implementa un sistema de control de acceso basado en roles para of
 Sigue los siguientes pasos para correr la aplicación en modo de desarrollo:
 
 ### 🔽 1. Clonar el repositorio
-
+```bash
 # Clona el repositorio
 git clone git@github.com:martindipeco/inquisitorius.git
 cd inquisitorius-feat/vista-registro
@@ -187,7 +187,7 @@ npm install
 
 # Inicia el servidor de desarrollo
 npm run dev
-
+```
 ---
 
 ## 🧩 Funcionalidades Implementadas en el Backend
