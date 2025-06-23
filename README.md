@@ -1,161 +1,119 @@
-# 🚀 Pasos para Iniciar el Servidor - API SkillsLink
+# Inquisitorius - Frontend
 
-## 📋 Requisitos Previos
 
-### Software Necesario
-- **Java 17** (JDK)
-- **Maven 3.6+**
-- **MySQL 8.0+**
-- **IntelliJ IDEA** (recomendado)
-
-### Verificar Instalaciones
-```bash
-java -version    # Debe mostrar Java 17
-mvn -version     # Debe mostrar Maven 3.6+
-mysql --version  # Debe mostrar MySQL 8.0+
-```
-
-## 🗄️ Configuración de Base de Datos
-
-### 1. Iniciar MySQL
-```bash
-# En Windows (si está instalado como servicio)
-net start mysql
-
-# En macOS con Homebrew
-brew services start mysql
-
-# En Linux
-sudo systemctl start mysql
-```
-
-### 2. Crear Usuario y Base de Datos (Opcional)
-```sql
--- Conectarse a MySQL como administrador
-mysql -u root -p
-
--- La base de datos se creará automáticamente por la configuración
--- spring.datasource.url=...?createDatabaseIfNotExist=true
-```
-
-## ⚙️ Configuración de Variables de Entorno
-
-### Opción 1: Variables de Sistema
-```bash
-# Windows (CMD)
-set DB_PASSWORD=root
-set JWT_SECRET=123456
-
-# Windows (PowerShell)
-$env:DB_PASSWORD="root"
-$env:JWT_SECRET="123456"
-
-# macOS/Linux
-export DB_PASSWORD=root
-export JWT_SECRET=123456
-```
-
-### Opción 2: Configuración en IntelliJ IDEA
-1. Abrir **Run/Debug Configurations**
-2. Seleccionar la configuración de **SkillslinkApplication**
-3. En **Environment Variables** agregar:
-   - `DB_PASSWORD=root`
-   - `JWT_SECRET=123456`
-
-## 📦 Instalación y Ejecución
-
-### 1. Clonar y Acceder al Proyecto
-```bash
-git clone [URL_DEL_REPOSITORIO]
-cd skillslink-api
-```
-
-### 2. Instalar Dependencias
-```bash
-mvn clean install
-```
-
-### 3. Ejecutar la Aplicación
-
-#### Opción A: Desde IntelliJ IDEA
-1. Abrir el proyecto en **IntelliJ IDEA**
-2. Localizar `SkillslinkApplication.java`
-3. Click derecho → **Run 'SkillslinkApplication'**
-
-#### Opción B: Desde Terminal
-```bash
-# Ejecutar directamente con Maven
-mvn spring-boot:run
-
-# O compilar y ejecutar el JAR
-mvn clean package
-java -jar target/skillslink-[VERSION].jar
-```
-
-## ✅ Verificación
-
-### El servidor debería iniciar exitosamente y mostrar:
-```
-Started SkillslinkApplication in X.XXX seconds (JVM running for X.XXX)
-```
-
-### Verificar que la aplicación esté corriendo:
-- **URL Base**: `http://localhost:3000`
-- **Puerto**: 3000
-- **Base de Datos**: `skilllink_db` (se crea automáticamente)
-
-### Endpoints de Prueba
-```bash
-# Verificar que el servidor responda
-curl http://localhost:3000
-
-# O abrir en el navegador
-http://localhost:3000
-```
-
-## 🔧 Troubleshooting
-
-### Problemas Comunes
-
-#### Error de Conexión a MySQL
-```
-Error: Cannot load driver class: com.mysql.cj.jdbc.Driver
-```
-**Solución**: Verificar que MySQL esté corriendo y las credenciales sean correctas.
-
-#### Puerto 3000 en Uso
-```
-Error: Port 3000 is already in use
-```
-**Solución**: Cambiar el puerto en `application.properties` o terminar el proceso que usa el puerto.
-
-#### Variables de Entorno No Encontradas
-```
-Error: Could not resolve placeholder 'DB_PASSWORD'
-```
-**Solución**: Verificar que las variables de entorno estén configuradas correctamente.
-
-## 📁 Estructura del Proyecto
-```
-skillslink-api/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/.../SkillslinkApplication.java
-│   │   └── resources/
-│   │       └── application.properties
-├── target/
-├── pom.xml
-└── README.md
-```
-
-## 📝 Notas Adicionales
-
-- La aplicación usa **Spring Boot 3.3.0** con **Java 17**
-- Hibernate está configurado en modo `update` (creará/actualizará tablas automáticamente)
-- Los logs SQL están habilitados para debugging
-- El servidor corre en el puerto **3000** (no el 8080 por defecto)
+**Inquisitorius** es una plataforma educativa desarrollada con **React + TypeScript + Vite** que permite a estudiantes y mentores interactuar en un entorno digital seguro, colaborativo. Este repositorio contiene el **frontend SPA** con integración futura a backend Spring Boot + MySQL/PostgreSQL.
 
 ---
 
-¿Necesitas ayuda con algún paso específico? ¡No dudes en preguntar! 🤝
+## 📌 Características Principales
+
+- 🧠 Autenticación de usuarios (login, registro)
+- 🧑‍🏫 Perfiles para estudiantes y mentores
+- 🌐 Comunidad con filtrado de habilidades, intereses y ubicación
+- 🎯 Participación en desafíos y mentorías
+- ✉️ Sistema de mensajería entre usuarios
+- 🏆 Visualización gráfica de logros e insignias
+- 🧭 SPA (Single Page Application) con navegación fluida
+
+---
+
+## 📁 Estructura del Proyecto
+
+src/
+│
+├── assets/ # Imágenes y archivos estáticos
+│ └── images/
+│ └── Imagen2_estudiantes_sinLogin_ppal.jpg
+│
+├── components/
+│ └── common/
+│ ├── Header.tsx
+│ └── Footer.tsx
+│
+├── pages/ # Vistas del proyecto
+│ ├── Login.tsx
+│ ├── Register.tsx
+│ ├── Dashboard.tsx
+│ ├── Home.tsx
+│ ├── Community.tsx
+│ ├── Challenges.tsx
+│ ├── Messaging.tsx
+│ ├── Progress.tsx
+│ ├── UserProfile.tsx
+│ └── Mentorships.tsx
+│
+├── routes/ # SPA Routing
+│ └── AppRouter.tsx
+│
+├── styles/
+│ └── login.css
+│
+├── App.tsx
+├── main.tsx
+└── index.css
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+- **React 18**
+- **TypeScript**
+- **Vite**
+- **TailwindCSS**
+- **React Router**
+- **PostCSS + Autoprefixer**
+- **Mock JSON para pruebas**
+
+---
+
+### 🔧 Estilo y Layout
+- Inputs de login y formularios con diseño más compacto, color blanco, responsivos.
+- Botones de envío en color `#00B4D8` con mismo ancho de los inputs.
+- Login alineado a la derecha, con imagen de fondo (estudiantes).
+- Header con fondo `#006D77` y texto blanco.
+- Footer con estilo unificado al Header.
+
+### ✨ Funcionalidades
+- Validaciones mejoradas: correos deben contener `@`, contraseñas de 6-12 caracteres.
+- Efectos visuales para registros exitosos y cambios de pantalla.
+- SPA completamente funcional: rutas sin recarga, navegación rápida.
+- Mentorías (lista, creación de mentorías, vista mentor)
+- Mensajería (lista chats, mensajes, simulación en tiempo real)
+- Progreso (cursos y certificados)
+- Dashboard, UserProfile con formularios y modales
+- Ya tienes Login, Registro, Home, Comunidad y Mentorías con creación.
+- SPA con rutas protegidas y roles.
+- Código modular, comentarios implícitos con nombres y estructura clara.
+- TailwindCSS para estilos responsivos.
+- Simulación con datos mock para futura integración backend.
+- Sección de mentorías protegida para rol mentor.
+
+---
+
+## 🔐 Roles de Usuario
+
+### Usuario (Estudiante)
+- Inicio personalizado con mensaje motivacional.
+- Lista de cursos, inscripciones, progreso y certificaciones.
+- Perfil editable.
+
+### Mentor
+- Lista de mentorías activas.
+- Posibilidad de crear nuevas mentorías desde un formulario especializado.
+
+---
+
+## 🚀 Instalación y ejecución
+
+```bash
+# Clona el repositorio
+git clone https://github.com/Alejarp78/inquisitorius-frontend.git
+cd inquisitorius-frontend
+
+# Instala dependencias
+npm install
+
+# Inicia el servidor de desarrollo
+npm run dev
+
+
