@@ -178,7 +178,6 @@ Sigue los siguientes pasos para correr la aplicación en modo de desarrollo:
 
 ### 🔽 1. Clonar el repositorio
 
-```bash
 # Clona el repositorio
 git clone git@github.com:martindipeco/inquisitorius.git
 cd inquisitorius-feat/vista-registro
