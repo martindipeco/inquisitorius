@@ -19,6 +19,7 @@
 
 ## 📁 Estructura del Proyecto
 
+```
 src/
 │
 ├── assets/ # Imágenes y archivos estáticos
@@ -51,7 +52,7 @@ src/
 ├── App.tsx
 ├── main.tsx
 └── index.css
-
+```
 ---
 
 ## 🛠️ Tecnologías Utilizadas
@@ -107,8 +108,8 @@ src/
 
 ```bash
 # Clona el repositorio
-git clone https://github.com/Alejarp78/inquisitorius-frontend.git
-cd inquisitorius-frontend
+git clone git@github.com:martindipeco/inquisitorius.git
+cd inquisitorius-feat/vista-registro
 
 # Instala dependencias
 npm install
