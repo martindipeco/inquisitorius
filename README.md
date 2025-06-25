@@ -1,6 +1,6 @@
-# Inquisitorius – Plataforma de Mentoría y Certificación
+# Mentora – Plataforma de Mentoría y Certificación
 
-**Inquisitorius** es una plataforma educativa integral que conecta estudiantes y mentores mediante un entorno digital seguro y colaborativo. El sistema está dividido en dos partes:
+**Mentora** es una plataforma educativa integral que conecta estudiantes y mentores mediante un entorno digital seguro y colaborativo. El sistema está dividido en dos partes:
 
 - **Frontend SPA** desarrollado con **React + TypeScript + Vite**, enfocado en la experiencia del usuario.
 - **Backend** desarrollado con **Java + Spring Boot**, orientado a la gestión académica, mentorías y certificaciones.
@@ -88,7 +88,7 @@ src/
 
 ## 🎨 Estilo y Diseño (Frontend)
 
-El diseño de Inquisitorius está pensado para ser limpio, accesible y responsivo, adaptado tanto para estudiantes como mentores.
+El diseño de Mentora está pensado para ser limpio, accesible y responsivo, adaptado tanto para estudiantes como mentores.
 
 ### 🔧 Estilo y Layout
 
@@ -133,7 +133,7 @@ El diseño de Inquisitorius está pensado para ser limpio, accesible y responsiv
 
 ## 🔐 Roles de Usuario
 
-Inquisitorius implementa un sistema de control de acceso basado en roles para ofrecer experiencias diferenciadas según el tipo de usuario. Los roles definidos son:
+Mentora implementa un sistema de control de acceso basado en roles para ofrecer experiencias diferenciadas según el tipo de usuario. Los roles definidos son:
 
 - `USER` (Estudiante)
 - `MENTOR`
@@ -293,7 +293,7 @@ skillslink-insomnia.json
 
 ## 🔮 ¿Por qué destaca este proyecto?
 
-**Inquisitorius** no solo propone una solución técnica funcional, sino que se consolida como una plataforma educativa con enfoque humano, modularidad tecnológica y escalabilidad.
+**Mentora** no solo propone una solución técnica funcional, sino que se consolida como una plataforma educativa con enfoque humano, modularidad tecnológica y escalabilidad.
 
 ---
 
