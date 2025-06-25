@@ -40,9 +40,9 @@ public class TokenService {
         }
     }
 
-    private Instant generarFechaExpiracion()//hardcodeado a 2 horas
+    private Instant generarFechaExpiracion()//hardcodeado a 12 horas
     {
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-05:00"));//averiguar offset especifico por país
+        return LocalDateTime.now().plusHours(12).toInstant(ZoneOffset.of("-05:00"));//averiguar offset especifico por país
     }
 
     public String getSubject(String token)
