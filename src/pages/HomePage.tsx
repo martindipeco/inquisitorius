@@ -36,6 +36,9 @@ export const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Por ahora usamos un ID fijo, en el futuro esto vendría del contexto de autenticación
+  const currentUserId = 1;
+
   // Memoizar el cálculo de estadísticas
   const estadisticas = useMemo(() => ({
     totalCursos: cursos.length,
@@ -114,6 +117,7 @@ export const HomePage = () => {
         cursos={cursos} 
         onCursoSelect={handleCursoSelect} 
         onConfiguracionesClick={handleConfiguracionesClick}
+        currentUserId={currentUserId}
       />
       <main className="flex-1">
         {/* Hero Section */}

@@ -20,7 +20,15 @@ interface DropdownMenuProps {
   onHelpClick?: () => void;
 }
 
-export const DropdownMenu = ({ isOpen, cursos = [], onCursoSelect, onClose, onConfiguracionesClick, onAboutClick, onHelpClick }: DropdownMenuProps) => {
+export const DropdownMenu = ({ 
+  isOpen, 
+  cursos = [], 
+  onCursoSelect, 
+  onClose, 
+  onConfiguracionesClick, 
+  onAboutClick, 
+  onHelpClick 
+}: DropdownMenuProps) => {
   if (!isOpen) return null;
 
   return (
