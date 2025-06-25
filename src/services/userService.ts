@@ -9,6 +9,16 @@ export interface User {
   avatarUrl?: string;
 }
 
+// Tipo para los datos del mock
+interface MockUser {
+  id: number;
+  email: string;
+  password: string;
+  nombre: string | null;
+  apellido: string | null;
+  rol: 'USUARIO' | 'ADMIN';
+}
+
 class UserService {
   /**
    * Obtiene los datos de un usuario por su ID.
@@ -19,8 +29,17 @@ class UserService {
     try {
       // Simular delay de API
       await new Promise(resolve => setTimeout(resolve, 300));
-      const user = usersData.users.find(u => u.id === userId);
-      return user || null;
+      const user = (usersData as MockUser[]).find((u: MockUser) => u.id.toString() === userId);
+      
+      if (!user) return null;
+      
+      return {
+        id: user.id.toString(),
+        nombre: user.nombre || '',
+        email: user.email,
+        bio: '',
+        avatarUrl: undefined
+      };
     } catch (error) {
       console.error('Error obteniendo datos del usuario:', error);
       throw new Error('No se pudieron cargar los datos del usuario.');
@@ -42,17 +61,20 @@ class UserService {
 
       // Esta parte es solo para la simulación. En una app real,
       // el backend se encargaría de actualizar y devolver los datos.
-      const userIndex = usersData.users.findIndex(u => u.id === userId);
+      const userIndex = (usersData as MockUser[]).findIndex((u: MockUser) => u.id.toString() === userId);
       if (userIndex === -1) {
         throw new Error('Usuario no encontrado.');
       }
       
+      const currentUser = (usersData as MockUser[])[userIndex];
       const updatedUser = {
-        ...usersData.users[userIndex],
-        ...data,
+        id: currentUser.id.toString(),
+        nombre: data.nombreCompleto || currentUser.nombre || '',
+        email: data.email,
+        bio: data.bio || '',
+        avatarUrl: undefined
       };
 
-      // usersData.users[userIndex] = updatedUser; // Esto no funcionará en memoria.
       console.log('[UserService] Datos que serían guardados:', updatedUser);
 
       return updatedUser;

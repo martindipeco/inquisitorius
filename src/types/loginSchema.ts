@@ -8,7 +8,8 @@ export const loginSchema = z.object({
   password: z
     .string()
     .nonempty('La contraseña es obligatoria')
-    .min(6, 'La contraseña debe tener al menos 6 caracteres'),
+    .min(8, 'La contraseña debe tener al menos 8 caracteres')
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, 'La contraseña debe contener al menos una mayúscula, una minúscula y un número'),
 });
 
 export type LoginForm = z.infer<typeof loginSchema>; 

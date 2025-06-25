@@ -18,6 +18,7 @@ interface DropdownMenuProps {
   onConfiguracionesClick?: () => void;
   onAboutClick?: () => void;
   onHelpClick?: () => void;
+  onLogout?: () => void;
 }
 
 export const DropdownMenu = ({ 
@@ -27,7 +28,8 @@ export const DropdownMenu = ({
   onClose, 
   onConfiguracionesClick, 
   onAboutClick, 
-  onHelpClick 
+  onHelpClick,
+  onLogout
 }: DropdownMenuProps) => {
   if (!isOpen) return null;
 
@@ -118,7 +120,16 @@ export const DropdownMenu = ({
         <span>Ayuda</span>
       </button>
 
-      <button className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 rounded hover:bg-gray-100 cursor-pointer w-full text-left">
+      <div className="h-px bg-gray-200 my-1" />
+
+      {/* Cerrar Sesión */}
+      <button 
+        className="flex items-center space-x-2 px-3 py-2 text-sm text-red-600 rounded hover:bg-red-50 cursor-pointer w-full text-left"
+        onClick={() => {
+          onLogout?.();
+          onClose();
+        }}
+      >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
         </svg>

@@ -10,6 +10,7 @@ import { CertificationsContent } from '../components/configuraciones/Certificati
 import { SecurityContent } from '../components/configuraciones/SecurityContent';
 import { NotificationsContent } from '../components/configuraciones/NotificationsContent';
 import { PROTECTED_ROUTES } from '../routes/routes';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 type ConfigSection = 'perfil' | 'cursos' | 'certificaciones' | 'seguridad' | 'notificaciones';
 
@@ -17,9 +18,10 @@ export const ConfiguracionesPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeSection, setActiveSection] = useState<ConfigSection>('perfil');
+  const { user } = useAuthContext();
 
-  // Por ahora usamos un ID fijo, en el futuro esto vendría del contexto de autenticación
-  const currentUserId = 1;
+  // Usar el ID del usuario autenticado
+  const currentUserId = user?.id || 1;
 
   // Mapeo de rutas a secciones
   const routeToSection: Record<string, ConfigSection> = {

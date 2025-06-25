@@ -7,36 +7,33 @@ import { ConfirmationModal } from '../ConfirmationModal';
 import { Icon } from '@iconify/react';
 import { Input } from '../Input';
 import { ImageUpload } from '../ImageUpload';
-import { Toast } from '../Toast/Toast';
-import { useToast } from '../../hooks/useToast';
-import { userService } from '../../services/userService';
+import { useToast } from '../../contexts/ToastContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 export const EditProfileContent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formDataToSubmit, setFormDataToSubmit] = useState<ProfileFormData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const { toast, showError, showSuccess, hideToast } = useToast();
+  const { showError, showSuccess } = useToast();
+  const { user } = useAuthContext();
 
   const methods = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
   });
 
+  // Cargar datos del usuario autenticado
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const user = await userService.getUserById('usr_1');
-        if (user) {
-          methods.reset({ ...user, avatar: user.avatarUrl });
-        }
-      } catch (error) {
-        console.error("Error al cargar los datos del perfil", error);
-        showError("Error", "No se pudieron cargar los datos del perfil");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchUserData();
-  }, [methods, showError]);
+    if (user) {
+      // Convertir los datos del usuario autenticado al formato del formulario
+      const profileData: ProfileFormData = {
+        nombreCompleto: user.nombre && user.apellido ? `${user.nombre} ${user.apellido}` : '',
+        email: user.email,
+        bio: '', // Por ahora vacío, se puede expandir después
+        foto: undefined // Por ahora sin foto, se puede agregar después
+      };
+      
+      methods.reset(profileData);
+    }
+  }, [user, methods]);
 
   const handleFormSubmit: SubmitHandler<ProfileFormData> = (data) => {
     setFormDataToSubmit(data);
@@ -61,8 +58,8 @@ export const EditProfileContent = () => {
     if (formDataToSubmit) {
       try {
         console.log('Enviando datos al backend:', formDataToSubmit);
-        if (formDataToSubmit.avatar instanceof File) {
-          console.log('Subiendo nuevo avatar...');
+        if (formDataToSubmit.foto instanceof File) {
+          console.log('Subiendo nueva foto...');
         }
         showSuccess("¡Éxito!", "Los cambios se han guardado correctamente");
       } catch(error) {
@@ -73,7 +70,8 @@ export const EditProfileContent = () => {
     setIsModalOpen(false);
   };
 
-  if (isLoading) {
+  // Mostrar loading mientras se cargan los datos del usuario
+  if (!user) {
     return (
       <div className="flex items-center justify-center py-12">
         <Icon icon="mdi:loading" className="animate-spin h-10 w-10 text-blue-600" />
@@ -92,13 +90,13 @@ export const EditProfileContent = () => {
         <div className="bg-white p-6 rounded-lg border border-gray-200">
           <form onSubmit={methods.handleSubmit(handleFormSubmit)} noValidate>
             <div className="space-y-6">
-              <ImageUpload name="avatar" />
+              <ImageUpload name="foto" />
               
               <Input
                 label="Nombre Completo"
                 type="text"
-                {...methods.register('nombre')}
-                error={methods.formState.errors.nombre?.message}
+                {...methods.register('nombreCompleto')}
+                error={methods.formState.errors.nombreCompleto?.message}
               />
 
               <Input
@@ -157,14 +155,6 @@ export const EditProfileContent = () => {
         onConfirm={handleConfirmSubmit}
         title="Confirmar Cambios"
         description="¿Estás seguro de que quieres guardar los cambios en tu perfil? Esta acción no se puede deshacer."
-      />
-
-      <Toast
-        open={toast.open}
-        onOpenChange={hideToast}
-        title={toast.title}
-        description={toast.description}
-        type={toast.type}
       />
     </FormProvider>
   );

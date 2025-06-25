@@ -1,11 +1,15 @@
-// Rutas públicas
+// Rutas públicas (sin autenticación requerida)
 export const PUBLIC_ROUTES = {
-  HOME: '/',
+  WELCOME: '/',
   LOGIN: '/login',
+  REGISTER: '/register',
+  ABOUT: '/acerca',
+  HELP: '/ayuda',
 } as const;
 
-// Rutas protegidas (futuras)
+// Rutas protegidas (requieren autenticación)
 export const PROTECTED_ROUTES = {
+  HOME: '/home',
   DASHBOARD: '/dashboard',
   PROFILE: '/profile',
   EDIT_PROFILE: '/profile/edit',

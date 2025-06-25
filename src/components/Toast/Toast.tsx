@@ -16,24 +16,31 @@ const toastVariants = {
   initial: { 
     opacity: 0, 
     y: 50, 
-    scale: 0.3
+    scale: 0.8,
+    x: 100
   },
   animate: { 
     opacity: 1, 
     y: 0, 
     scale: 1,
+    x: 0,
     transition: {
       type: "spring" as const,
-      stiffness: 300,
-      damping: 30
+      stiffness: 400,
+      damping: 35,
+      duration: 0.4
     }
   },
   exit: { 
     opacity: 0, 
-    y: 20, 
-    scale: 0.95,
+    y: -20, 
+    scale: 0.9,
+    x: 100,
     transition: {
-      duration: 0.2
+      type: "spring" as const,
+      stiffness: 500,
+      damping: 40,
+      duration: 0.3
     }
   }
 };
@@ -80,6 +87,7 @@ export const Toast = ({
   duration = 5000 
 }: ToastProps) => {
   const [isShaking, setIsShaking] = useState(false);
+  const [progress, setProgress] = useState(100);
 
   useEffect(() => {
     if (open && type === 'error') {
@@ -98,8 +106,27 @@ export const Toast = ({
   useEffect(() => {
     if (!open) {
       setIsShaking(false);
+      setProgress(100);
     }
   }, [open]);
+
+  // Progress bar animation
+  useEffect(() => {
+    if (open) {
+      setProgress(100);
+      const interval = setInterval(() => {
+        setProgress(prev => {
+          if (prev <= 0) {
+            clearInterval(interval);
+            return 0;
+          }
+          return prev - (100 / (duration / 100));
+        });
+      }, 100);
+
+      return () => clearInterval(interval);
+    }
+  }, [open, duration]);
 
   return (
     <ToastPrimitive.Root
@@ -115,7 +142,7 @@ export const Toast = ({
             initial="initial"
             animate="animate"
             exit="exit"
-            className={getToastStyles(type, isShaking)}
+            className={`${getToastStyles(type, isShaking)} relative overflow-hidden`}
             onAnimationComplete={() => {
               if (isShaking) {
                 // Reset shake after animation completes
@@ -123,6 +150,12 @@ export const Toast = ({
               }
             }}
           >
+            {/* Progress bar */}
+            <div 
+              className="absolute bottom-0 left-0 h-1 bg-current opacity-20 transition-all duration-100 ease-linear"
+              style={{ width: `${progress}%` }}
+            />
+            
             <Icon 
               icon={getIcon(type)} 
               className={`w-5 h-5 mt-0.5 flex-shrink-0 ${

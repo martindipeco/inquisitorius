@@ -157,6 +157,69 @@ src/
 
 ## 🚀 Deployment
 
+### Configuración de Rutas para Producción
+
+Para que las rutas de React Router funcionen correctamente en producción (ej: `mentora.com/configuraciones`), es necesario configurar el servidor web para que redirija todas las rutas a `index.html`.
+
+#### Plataformas Soportadas
+
+**Netlify** (archivo `public/_redirects`):
+```
+/*    /index.html   200
+```
+
+**Vercel** (archivo `public/vercel.json`):
+```json
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+```
+
+**Apache** (archivo `public/.htaccess`):
+```apache
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteRule . /index.html [L]
+```
+
+**IIS** (archivo `public/web.config`):
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <system.webServer>
+    <rewrite>
+      <rules>
+        <rule name="React Router" stopProcessing="true">
+          <match url=".*" />
+          <conditions logicalGrouping="MatchAll">
+            <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+            <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+            <add input="{REQUEST_URI}" pattern="^/(api)" negate="true" />
+          </conditions>
+          <action type="Rewrite" url="/" />
+        </rule>
+      </rules>
+    </rewrite>
+  </system.webServer>
+</configuration>
+```
+
+**Nginx** (configuración del servidor):
+```nginx
+location / {
+  try_files $uri $uri/ /index.html;
+}
+```
+
 ### Optimizaciones de Servidor
 - **Compresión**: Habilitar gzip/brotli en el servidor
 - **Caching**: Headers de cache apropiados

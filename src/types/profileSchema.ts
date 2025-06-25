@@ -4,18 +4,19 @@ const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/gif"];
 
 export const profileSchema = z.object({
-  nombre: z.string()
-    .min(3, { message: 'El nombre debe tener al menos 3 caracteres.' })
-    .max(50, { message: 'El nombre no puede exceder los 50 caracteres.' }),
+  nombreCompleto: z.string()
+    .min(3, { message: 'El nombre completo debe tener al menos 3 caracteres.' })
+    .max(100, { message: 'El nombre completo no puede exceder los 100 caracteres.' })
+    .optional(),
   
   email: z.string()
     .email({ message: 'Por favor, introduce un correo electrónico válido.' }),
   
   bio: z.string()
-    .max(200, { message: 'La biografía no puede exceder los 200 caracteres.' })
+    .max(500, { message: 'La biografía no puede exceder los 500 caracteres.' })
     .optional(),
   
-  avatar: z.any()
+  foto: z.any()
     .optional()
     .refine(
       (value) => {

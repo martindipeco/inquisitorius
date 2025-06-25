@@ -4,6 +4,7 @@ import { Icon } from '@iconify/react';
 import { DropdownMenu } from './DropdownMenu';
 import { PUBLIC_ROUTES, PROTECTED_ROUTES } from '../routes/routes';
 import { messageService } from '../services/messageService';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 interface Curso {
   id: string;
@@ -26,18 +27,24 @@ export const Navbar = ({
   cursos = [], 
   onCursoSelect, 
   onConfiguracionesClick,
-  currentUserId = 1 
+  currentUserId 
 }: NavbarProps) => {
   const logo = '/logo.svg';
   const navigate = useNavigate();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const { user, isAuthenticated, logout } = useAuthContext();
+
+  // Usar el ID del usuario autenticado o el proporcionado como prop
+  const userId = currentUserId || user?.id || 1;
 
   useEffect(() => {
     const loadUnreadCount = async () => {
+      if (!isAuthenticated) return;
+      
       try {
-        const count = await messageService.contarMensajesNoLeidos(currentUserId);
+        const count = await messageService.contarMensajesNoLeidos(userId);
         setUnreadCount(count);
       } catch (error) {
         console.error('Error loading unread count:', error);
@@ -48,15 +55,19 @@ export const Navbar = ({
     // Actualizar cada 30 segundos
     const interval = setInterval(loadUnreadCount, 30000);
     return () => clearInterval(interval);
-  }, [currentUserId]);
+  }, [userId, isAuthenticated]);
 
   const handleLogoClick = () => {
-    navigate(PUBLIC_ROUTES.HOME);
+    if (isAuthenticated) {
+      navigate(PROTECTED_ROUTES.HOME);
+    } else {
+      navigate(PUBLIC_ROUTES.WELCOME);
+    }
   };
 
   const handleConfiguracionesClick = () => {
     onConfiguracionesClick?.();
-    navigate('/configuraciones');
+    navigate(PROTECTED_ROUTES.CONFIGURACIONES);
   };
 
   const handleChatClick = () => {
@@ -64,14 +75,24 @@ export const Navbar = ({
   };
 
   const handleAboutClick = () => {
-    navigate('/acerca');
+    navigate(PUBLIC_ROUTES.ABOUT);
   };
 
   const handleHelpClick = () => {
-    navigate('/ayuda');
+    navigate(PUBLIC_ROUTES.HELP);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate(PUBLIC_ROUTES.WELCOME);
   };
 
   const isChatActive = location.pathname === PROTECTED_ROUTES.CHAT;
+
+  // Si no está autenticado, no mostrar el navbar
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <nav className="bg-white shadow-sm border-b border-gray-200 px-4 py-3">
@@ -114,6 +135,14 @@ export const Navbar = ({
             )}
           </button>
 
+          {/* User Info */}
+          <div className="flex items-center space-x-2 px-3 py-2 text-gray-700">
+            <Icon icon="mdi:account-circle" className="text-lg" />
+            <span className="font-medium text-sm">
+              {user?.rol}
+            </span>
+          </div>
+
           {/* Desktop Menu Button */}
           <div className="relative">
             <button 
@@ -134,6 +163,7 @@ export const Navbar = ({
               onConfiguracionesClick={handleConfiguracionesClick}
               onAboutClick={handleAboutClick}
               onHelpClick={handleHelpClick}
+              onLogout={handleLogout}
             />
           </div>
         </div>
@@ -163,6 +193,7 @@ export const Navbar = ({
             onConfiguracionesClick={handleConfiguracionesClick}
             onAboutClick={handleAboutClick}
             onHelpClick={handleHelpClick}
+            onLogout={handleLogout}
           />
         </div>
       </div>

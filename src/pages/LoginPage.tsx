@@ -3,21 +3,21 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '../components/Input';
 import { Button } from '../components/Button';
 import { SocialButton } from '../components/SocialButton';
-import { useState, useCallback, memo } from 'react';
+import { useState, useCallback } from 'react';
 import { loginSchema } from '../types/loginSchema';
 import type { LoginForm } from '../types/loginSchema';
 import { Icon } from '@iconify/react';
-import { useToast } from '../hooks/useToast';
-import { Toast } from '../components/Toast/Toast';
-
-// Memoizar componentes para evitar re-renders innecesarios
-const MemoizedInput = memo(Input);
-const MemoizedButton = memo(Button);
-const MemoizedSocialButton = memo(SocialButton);
+import { useToast } from '../contexts/ToastContext';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { PUBLIC_ROUTES, PROTECTED_ROUTES } from '../routes/routes';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const { toast, showError, showSuccess, showInfo, hideToast } = useToast();
+  const { showError, showSuccess, showInfo } = useToast();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { login, isLoading: authLoading } = useAuthContext();
   
   const {
     register,
@@ -29,26 +29,37 @@ export default function LoginPage() {
     mode: 'onSubmit', // Validación solo al enviar el formulario
   });
 
-  // Memoizar callbacks para mejor performance
+  // Callbacks para mejor performance
   const togglePasswordVisibility = useCallback(() => {
     setShowPassword((prev) => !prev);
   }, []);
 
   const onSubmit = useCallback(async (data: LoginForm) => {
     try {
-      // Simular validación de credenciales
-      if (data.email === 'test@example.com' && data.password === 'password123') {
-        showSuccess("¡Bienvenido!", "Has iniciado sesión correctamente");
-        // Aquí redirigirías al usuario
-        console.log('Login exitoso:', data);
+      const response = await login(data.email, data.password);
+
+      if (response.success) {
+        showSuccess("¡Bienvenido!", response.message || "Has iniciado sesión correctamente");
+        
+        // Redirigir después de 1 segundo
+        setTimeout(() => {
+          // Si el usuario venía de una ruta específica, redirigir allí
+          const from = location.state?.from;
+          if (from && from !== PUBLIC_ROUTES.WELCOME) {
+            navigate(from);
+          } else {
+            // Si no, redirigir al home
+            navigate(PROTECTED_ROUTES.HOME);
+          }
+        }, 1000);
       } else {
-        showError("Credenciales incorrectas", "El correo o contraseña no son válidos");
+        showError("Error en el inicio de sesión", response.message || "Credenciales incorrectas");
       }
     } catch (error) {
       console.error('Error en login:', error);
       showError("Error de conexión", "No se pudo conectar con el servidor");
     }
-  }, [showSuccess, showError]);
+  }, [login, showSuccess, showError, navigate, location.state]);
 
   const handleSubmitWithValidation = useCallback(() => {
     const { errors } = formState;
@@ -69,26 +80,11 @@ export default function LoginPage() {
     showInfo("Funcionalidad en desarrollo", `Inicio de sesión con ${provider} estará disponible pronto`);
   }, [showInfo]);
 
-  // Memoizar elementos que no cambian
-  const socialButtons = useCallback(() => (
-    <>
-      <MemoizedSocialButton 
-        icon={<Icon icon="logos:facebook" className="w-6 h-6" aria-hidden="true" />}
-        aria-label="Iniciar sesión con Facebook"
-        onClick={() => handleSocialLogin('Facebook')}
-      />
-      <MemoizedSocialButton 
-        icon={<Icon icon="logos:google-icon" className="w-6 h-6" aria-hidden="true" />}
-        aria-label="Iniciar sesión con Google"
-        onClick={() => handleSocialLogin('Google')}
-      />
-      <MemoizedSocialButton 
-        icon={<Icon icon="logos:apple" className="w-6 h-6" aria-hidden="true" />}
-        aria-label="Iniciar sesión con Apple"
-        onClick={() => handleSocialLogin('Apple')}
-      />
-    </>
-  ), [handleSocialLogin]);
+  const handleGoToRegister = useCallback(() => {
+    navigate(PUBLIC_ROUTES.REGISTER);
+  }, [navigate]);
+
+  const isSubmitting = formState.isSubmitting || authLoading;
 
   return (
     <>
@@ -115,7 +111,7 @@ export default function LoginPage() {
             aria-label="Formulario de credenciales"
             noValidate
           >
-            <MemoizedInput
+            <Input
               label="Correo electrónico"
               type="email"
               placeholder="ejemplo@gmail.com"
@@ -132,7 +128,7 @@ export default function LoginPage() {
               </div>
             )}
             
-            <MemoizedInput
+            <Input
               label="Contraseña"
               type={showPassword ? 'text' : 'password'}
               placeholder="••••••••"
@@ -178,16 +174,16 @@ export default function LoginPage() {
               </a>
             </div>
             
-            <MemoizedButton 
+            <Button 
               type="button" 
-              disabled={formState.isSubmitting}
-              aria-describedby={formState.isSubmitting ? "submitting-status" : undefined}
+              disabled={isSubmitting}
+              aria-describedby={isSubmitting ? "submitting-status" : undefined}
               onClick={handleSubmitWithValidation}
             >
-              {formState.isSubmitting ? 'Iniciando sesión...' : 'Iniciar sesión'}
-            </MemoizedButton>
+              {isSubmitting ? 'Iniciando sesión...' : 'Iniciar sesión'}
+            </Button>
             
-            {formState.isSubmitting && (
+            {isSubmitting && (
               <div id="submitting-status" className="sr-only" role="status">
                 Procesando inicio de sesión
               </div>
@@ -208,35 +204,38 @@ export default function LoginPage() {
             role="group"
             aria-label="Botones de inicio de sesión con redes sociales"
           >
-            {socialButtons()}
+            <SocialButton 
+              icon={<Icon icon="logos:facebook" className="w-6 h-6" aria-hidden="true" />}
+              aria-label="Iniciar sesión con Facebook"
+              onClick={() => handleSocialLogin('Facebook')}
+            />
+            <SocialButton 
+              icon={<Icon icon="logos:google-icon" className="w-6 h-6" aria-hidden="true" />}
+              aria-label="Iniciar sesión con Google"
+              onClick={() => handleSocialLogin('Google')}
+            />
+            <SocialButton 
+              icon={<Icon icon="logos:apple" className="w-6 h-6" aria-hidden="true" />}
+              aria-label="Iniciar sesión con Apple"
+              onClick={() => handleSocialLogin('Apple')}
+            />
           </div>
           
           <div className="text-center">
             <p className="text-sm text-gray-600">
               ¿No tienes una cuenta?{' '}
-              <a 
-                href="#" 
+              <button 
+                type="button"
                 className="text-blue-600 font-semibold hover:text-blue-700 hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
                 aria-label="Ir a página de registro"
-                onClick={(e) => {
-                  e.preventDefault();
-                  showInfo("Funcionalidad en desarrollo", "Registro de usuarios estará disponible pronto");
-                }}
+                onClick={handleGoToRegister}
               >
                 Regístrate
-              </a>
+              </button>
             </p>
           </div>
         </div>
       </main>
-
-      <Toast
-        open={toast.open}
-        onOpenChange={hideToast}
-        title={toast.title}
-        description={toast.description}
-        type={toast.type}
-      />
     </>
   );
 } 

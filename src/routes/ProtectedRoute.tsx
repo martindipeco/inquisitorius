@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
+import { PUBLIC_ROUTES } from './routes';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -8,16 +10,22 @@ interface ProtectedRouteProps {
 
 export const ProtectedRoute = ({ 
   children, 
-  redirectTo = '/login' 
+  redirectTo = PUBLIC_ROUTES.WELCOME 
 }: ProtectedRouteProps) => {
-  // --- MODO DESARROLLO ACTIVADO ---
-  // La autenticación está desactivada para facilitar el desarrollo.
-  // TODO: Antes de hacer el commit final, descomenta la línea original y borra esta.
-  const isAuthenticated = true;
-  // const isAuthenticated = localStorage.getItem('authToken') !== null;
+  const { isAuthenticated, isLoading } = useAuthContext();
+  
+  // Mostrar loading mientras se verifica la autenticación
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
   
   if (!isAuthenticated) {
-    return <Navigate to={redirectTo} replace />;
+    // Redirigir a la página de bienvenida con aviso de registro
+    return <Navigate to={redirectTo} replace state={{ from: window.location.pathname }} />;
   }
   
   return <>{children}</>;

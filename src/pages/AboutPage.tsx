@@ -2,6 +2,22 @@ import { Navbar } from '../components/Navbar';
 import { Icon } from '@iconify/react';
 
 const logo = '/logo.svg';
+
+const teamMembers = [
+  { name: 'Sandra Vela', role: 'Backend Developer' },
+  { name: 'Martin Di Peco', role: 'Backend Developer' },
+  { name: 'Ángeles Escudero', role: 'Backend Developer' },
+  { name: 'Camilo', role: 'Backend Developer' },
+  { name: 'Brayan', role: 'Frontend Developer' }
+];
+
+const TeamMemberCard = ({ name, role }: { name: string; role: string }) => (
+  <div className="bg-blue-50 rounded-lg p-4 text-center shadow-sm hover:scale-105 transition-transform">
+    <div className="font-semibold text-blue-700">{name}</div>
+    <div className="text-xs text-gray-700">{role}</div>
+  </div>
+);
+
 const AboutPage = () => (
   <div className="min-h-screen bg-gray-50 flex flex-col">
     <Navbar />
@@ -22,18 +38,9 @@ const AboutPage = () => (
             <h2 className="text-xl font-bold text-gray-800">Equipo de desarrollo</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-blue-50 rounded-lg p-4 text-center shadow-sm hover:scale-105 transition-transform">
-              <div className="font-semibold text-blue-700">Nombre 1</div>
-              <div className="text-xs text-gray-700">Frontend</div>
-            </div>
-            <div className="bg-blue-50 rounded-lg p-4 text-center shadow-sm hover:scale-105 transition-transform">
-              <div className="font-semibold text-blue-700">Nombre 2</div>
-              <div className="text-xs text-gray-700">Backend</div>
-            </div>
-            <div className="bg-blue-50 rounded-lg p-4 text-center shadow-sm hover:scale-105 transition-transform">
-              <div className="font-semibold text-blue-700">Nombre 3</div>
-              <div className="text-xs text-gray-700">UI/UX</div>
-            </div>
+            {teamMembers.map((member, index) => (
+              <TeamMemberCard key={index} name={member.name} role={member.role} />
+            ))}
           </div>
         </div>
         <div className="mb-6">
@@ -41,7 +48,7 @@ const AboutPage = () => (
             <Icon icon="mdi:github" className="text-gray-700 text-xl" />
             <h2 className="text-xl font-bold text-gray-800">Enlaces útiles</h2>
           </div>
-          <a href="https://github.com/tu-repo" target="_blank" rel="noopener noreferrer" className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-lg font-medium shadow hover:bg-blue-200 transition-colors">
+          <a href="https://github.com/martindipeco/inquisitorius" target="_blank" rel="noopener noreferrer" className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-lg font-medium shadow hover:bg-blue-200 transition-colors">
             Repositorio en GitHub
           </a>
         </div>

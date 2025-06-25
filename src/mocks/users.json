@@ -1,11 +1,42 @@
-{
-  "users": [
-    {
-      "id": "usr_1",
-      "nombre": "Sofía Martínez",
-      "email": "sofia.martinez@mentora.com",
-      "bio": "Diseñadora UI/UX con pasión por crear interfaces intuitivas y estéticamente agradables. Entusiasta de las metodologías ágiles y el diseño centrado en el usuario.",
-      "avatarUrl": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face"
-    }
-  ]
-} 
+[
+  {
+    "id": 1,
+    "email": "test@example.com",
+    "password": "Test1234",
+    "nombre": null,
+    "apellido": null,
+    "rol": "USUARIO"
+  },
+  {
+    "id": 2,
+    "email": "admin@mentora.com",
+    "password": "Admin1234",
+    "nombre": "Admin",
+    "apellido": "Mentora",
+    "rol": "ADMIN"
+  },
+  {
+    "id": 3,
+    "email": "sofia.martinez@mentora.com",
+    "password": "Sofia1234",
+    "nombre": "Sofía",
+    "apellido": "Martínez",
+    "rol": "USUARIO"
+  },
+  {
+    "id": 4,
+    "email": "juan.perez@mentora.com",
+    "password": "Juan1234",
+    "nombre": "Juan",
+    "apellido": "Pérez",
+    "rol": "USUARIO"
+  },
+  {
+    "id": 5,
+    "email": "maria.garcia@mentora.com",
+    "password": "Maria1234",
+    "nombre": "María",
+    "apellido": "García",
+    "rol": "USUARIO"
+  }
+] 
