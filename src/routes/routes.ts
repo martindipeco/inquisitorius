@@ -17,6 +17,7 @@ export const PROTECTED_ROUTES = {
   CONFIGURACIONES_CERTIFICACIONES: '/configuraciones/certificaciones',
   CONFIGURACIONES_SEGURIDAD: '/configuraciones/seguridad',
   CONFIGURACIONES_NOTIFICACIONES: '/configuraciones/notificaciones',
+  CHAT: '/chat',
 } as const;
 
 // Rutas de error

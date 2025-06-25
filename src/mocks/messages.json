@@ -1,0 +1,259 @@
+{
+  "messages": [
+    {
+      "id": 1,
+      "contenido": "¡Hola! ¿Cómo estás?",
+      "remitenteId": 2,
+      "receptorId": 1,
+      "fechaEnvio": "2024-01-15T10:30:00Z",
+      "leido": true
+    },
+    {
+      "id": 2,
+      "contenido": "¡Hola! Muy bien, gracias. ¿Y tú?",
+      "remitenteId": 1,
+      "receptorId": 2,
+      "fechaEnvio": "2024-01-15T10:32:00Z",
+      "leido": true
+    },
+    {
+      "id": 3,
+      "contenido": "Perfecto. ¿Has revisado el proyecto que te envié?",
+      "remitenteId": 2,
+      "receptorId": 1,
+      "fechaEnvio": "2024-01-15T10:35:00Z",
+      "leido": false
+    },
+    {
+      "id": 4,
+      "contenido": "¡Hola Sofía! ¿Tienes tiempo para revisar mi diseño?",
+      "remitenteId": 3,
+      "receptorId": 1,
+      "fechaEnvio": "2024-01-15T09:15:00Z",
+      "leido": true
+    },
+    {
+      "id": 5,
+      "contenido": "Claro, envíamelo y lo reviso",
+      "remitenteId": 1,
+      "receptorId": 3,
+      "fechaEnvio": "2024-01-15T09:20:00Z",
+      "leido": false
+    },
+    {
+      "id": 6,
+      "contenido": "¿Podrías ayudarme con la implementación del chat?",
+      "remitenteId": 4,
+      "receptorId": 1,
+      "fechaEnvio": "2024-01-15T08:45:00Z",
+      "leido": true
+    },
+    {
+      "id": 7,
+      "contenido": "Por supuesto, ¿qué necesitas específicamente?",
+      "remitenteId": 1,
+      "receptorId": 4,
+      "fechaEnvio": "2024-01-15T08:50:00Z",
+      "leido": false
+    },
+    {
+      "id": 8,
+      "contenido": "¡Hola! ¿Cómo va el curso de React?",
+      "remitenteId": 5,
+      "receptorId": 1,
+      "fechaEnvio": "2024-01-15T07:30:00Z",
+      "leido": true
+    },
+    {
+      "id": 9,
+      "contenido": "Muy bien, estoy aprendiendo mucho",
+      "remitenteId": 1,
+      "receptorId": 5,
+      "fechaEnvio": "2024-01-15T07:35:00Z",
+      "leido": false
+    },
+    {
+      "id": 10,
+      "contenido": "¿Quieres que estudiemos juntos mañana?",
+      "remitenteId": 6,
+      "receptorId": 1,
+      "fechaEnvio": "2024-01-15T06:20:00Z",
+      "leido": true
+    },
+    {
+      "id": 11,
+      "contenido": "¡Perfecto! A las 10 AM",
+      "remitenteId": 1,
+      "receptorId": 6,
+      "fechaEnvio": "2024-01-15T06:25:00Z",
+      "leido": false
+    },
+    {
+      "id": 12,
+      "contenido": "¿Viste el nuevo video de TypeScript?",
+      "remitenteId": 7,
+      "receptorId": 1,
+      "fechaEnvio": "2024-01-15T05:15:00Z",
+      "leido": true
+    },
+    {
+      "id": 13,
+      "contenido": "Sí, está muy bueno",
+      "remitenteId": 1,
+      "receptorId": 7,
+      "fechaEnvio": "2024-01-15T05:20:00Z",
+      "leido": false
+    },
+    {
+      "id": 14,
+      "contenido": "¿Puedes revisar mi código?",
+      "remitenteId": 8,
+      "receptorId": 1,
+      "fechaEnvio": "2024-01-15T04:10:00Z",
+      "leido": true
+    },
+    {
+      "id": 15,
+      "contenido": "Claro, envíamelo",
+      "remitenteId": 1,
+      "receptorId": 8,
+      "fechaEnvio": "2024-01-15T04:15:00Z",
+      "leido": false
+    }
+  ],
+  "conversations": [
+    {
+      "id": 1,
+      "usuario1Id": 1,
+      "usuario2Id": 2,
+      "ultimoMensaje": {
+        "id": 3,
+        "contenido": "Perfecto. ¿Has revisado el proyecto que te envié?",
+        "remitenteId": 2,
+        "receptorId": 1,
+        "fechaEnvio": "2024-01-15T10:35:00Z",
+        "leido": false
+      }
+    },
+    {
+      "id": 2,
+      "usuario1Id": 1,
+      "usuario2Id": 3,
+      "ultimoMensaje": {
+        "id": 5,
+        "contenido": "Claro, envíamelo y lo reviso",
+        "remitenteId": 1,
+        "receptorId": 3,
+        "fechaEnvio": "2024-01-15T09:20:00Z",
+        "leido": false
+      }
+    },
+    {
+      "id": 3,
+      "usuario1Id": 1,
+      "usuario2Id": 4,
+      "ultimoMensaje": {
+        "id": 7,
+        "contenido": "Por supuesto, ¿qué necesitas específicamente?",
+        "remitenteId": 1,
+        "receptorId": 4,
+        "fechaEnvio": "2024-01-15T08:50:00Z",
+        "leido": false
+      }
+    },
+    {
+      "id": 4,
+      "usuario1Id": 1,
+      "usuario2Id": 5,
+      "ultimoMensaje": {
+        "id": 9,
+        "contenido": "Muy bien, estoy aprendiendo mucho",
+        "remitenteId": 1,
+        "receptorId": 5,
+        "fechaEnvio": "2024-01-15T07:35:00Z",
+        "leido": false
+      }
+    },
+    {
+      "id": 5,
+      "usuario1Id": 1,
+      "usuario2Id": 6,
+      "ultimoMensaje": {
+        "id": 11,
+        "contenido": "¡Perfecto! A las 10 AM",
+        "remitenteId": 1,
+        "receptorId": 6,
+        "fechaEnvio": "2024-01-15T06:25:00Z",
+        "leido": false
+      }
+    },
+    {
+      "id": 6,
+      "usuario1Id": 1,
+      "usuario2Id": 7,
+      "ultimoMensaje": {
+        "id": 13,
+        "contenido": "Sí, está muy bueno",
+        "remitenteId": 1,
+        "receptorId": 7,
+        "fechaEnvio": "2024-01-15T05:20:00Z",
+        "leido": false
+      }
+    },
+    {
+      "id": 7,
+      "usuario1Id": 1,
+      "usuario2Id": 8,
+      "ultimoMensaje": {
+        "id": 15,
+        "contenido": "Claro, envíamelo",
+        "remitenteId": 1,
+        "receptorId": 8,
+        "fechaEnvio": "2024-01-15T04:15:00Z",
+        "leido": false
+      }
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "nombre": "Sofía Martínez",
+      "avatarUrl": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face"
+    },
+    {
+      "id": 2,
+      "nombre": "Carlos Rodríguez",
+      "avatarUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
+    },
+    {
+      "id": 3,
+      "nombre": "Ana García",
+      "avatarUrl": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face"
+    },
+    {
+      "id": 4,
+      "nombre": "David López",
+      "avatarUrl": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
+    },
+    {
+      "id": 5,
+      "nombre": "María Fernández",
+      "avatarUrl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face"
+    },
+    {
+      "id": 6,
+      "nombre": "Javier Pérez",
+      "avatarUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face"
+    },
+    {
+      "id": 7,
+      "nombre": "Laura Torres",
+      "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face"
+    },
+    {
+      "id": 8,
+      "nombre": "Miguel Sánchez",
+      "avatarUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=face"
+    }
+  ]
+} 

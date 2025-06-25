@@ -3,6 +3,7 @@ import { HomePage } from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import { ConfiguracionesPage } from '../pages/ConfiguracionesPage';
 import { NotFoundPage } from '../pages/NotFoundPage';
+import { ChatPage } from '../pages/ChatPage';
 import { PUBLIC_ROUTES, PROTECTED_ROUTES, ERROR_ROUTES } from './routes';
 import { ProtectedRoute } from './ProtectedRoute';
 import AboutPage from '../pages/AboutPage';
@@ -18,6 +19,14 @@ export const AppRoutes = () => {
       <Route path="/ayuda" element={<HelpPage />} />
       
       {/* Rutas protegidas */}
+      <Route 
+        path={PROTECTED_ROUTES.CHAT} 
+        element={
+          <ProtectedRoute>
+            <ChatPage />
+          </ProtectedRoute>
+        } 
+      />
       <Route 
         path={PROTECTED_ROUTES.CONFIGURACIONES} 
         element={

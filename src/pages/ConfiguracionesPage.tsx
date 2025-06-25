@@ -18,6 +18,9 @@ export const ConfiguracionesPage = () => {
   const location = useLocation();
   const [activeSection, setActiveSection] = useState<ConfigSection>('perfil');
 
+  // Por ahora usamos un ID fijo, en el futuro esto vendría del contexto de autenticación
+  const currentUserId = 1;
+
   // Mapeo de rutas a secciones
   const routeToSection: Record<string, ConfigSection> = {
     [PROTECTED_ROUTES.CONFIGURACIONES]: 'perfil',
@@ -107,7 +110,10 @@ export const ConfiguracionesPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
-      <Navbar onConfiguracionesClick={handleConfiguracionesClick} />
+      <Navbar 
+        onConfiguracionesClick={handleConfiguracionesClick}
+        currentUserId={currentUserId}
+      />
       <div className="flex-1 flex flex-col overflow-hidden">
         <TabNavigation items={tabItems} onItemClick={handleTabClick} />
         <div className="flex-1 overflow-auto">
