@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 
 @Service
@@ -21,10 +22,8 @@ public class TokenService {
     @Value("${api.infra.security.secret}")
     private String apiSecret;
 
-    public String generarToken(Usuario usuario)
-    {
-        try
-        {
+    public String generarToken(Usuario usuario) {
+        try {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret); //secreto para validar firma
             return JWT.create().withIssuer("SkillsLink")
                     .withSubject(usuario.getLogin())
@@ -32,38 +31,30 @@ public class TokenService {
                     .withClaim("role", usuario.getRol().name()) // Single role
                     .withExpiresAt(generarFechaExpiracion())
                     .sign(algorithm); //creo un string
-        }
-        catch(JWTCreationException e)
-        {
+        } catch (JWTCreationException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException();
         }
     }
 
-    private Instant generarFechaExpiracion()//hardcodeado a 2 horas
-    {
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-05:00"));//averiguar offset especifico por país
+    private Instant generarFechaExpiracion() {
+        ZoneId zone = ZoneId.systemDefault();  // Obtener la zona horaria del sistema
+        return LocalDateTime.now(zone).plusMinutes(30).toInstant(ZoneOffset.ofTotalSeconds(zone.getRules().getOffset(LocalDateTime.now()).getTotalSeconds()));
     }
 
-    public String getSubject(String token)
-    {
-        if(token == null)
-        {
+    public String getSubject(String token) {
+        if (token == null) {
             throw new RuntimeException();
         }
         DecodedJWT verifier = null;
-        try
-        {
+        try {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret);
-            verifier = JWT.require(algorithm).withIssuer("voll med").build().verify(token);
+            verifier = JWT.require(algorithm).withIssuer("SkillsLink").build().verify(token);
             verifier.getSubject();
-        }
-        catch (JWTVerificationException exception)
-        {
+        } catch (JWTVerificationException exception) {
             System.out.println(exception.getMessage());
         }
-        if (verifier.getSubject() == null)
-        {
+        if (verifier.getSubject() == null) {
             throw new RuntimeException("subject nulo desde getSubject");
         }
         return verifier.getSubject();
@@ -71,7 +62,7 @@ public class TokenService {
 
     // METHOD: Extract role from token
     public String getRoleFromToken(String token) {
-        if(token == null) {
+        if (token == null) {
             throw new RuntimeException("Token is null");
         }
 
@@ -91,7 +82,7 @@ public class TokenService {
 
     // METHOD: Extract user ID from token (useful for authorization)
     public Long getUserIdFromToken(String token) {
-        if(token == null) {
+        if (token == null) {
             throw new RuntimeException("Token is null");
         }
 
@@ -111,7 +102,7 @@ public class TokenService {
 
     // Helper method to validate token and return all claims
     public DecodedJWT validateAndDecodeToken(String token) {
-        if(token == null) {
+        if (token == null) {
             throw new RuntimeException("Token is null");
         }
 

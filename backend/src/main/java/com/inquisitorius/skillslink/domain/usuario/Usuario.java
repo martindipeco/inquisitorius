@@ -40,9 +40,10 @@ public class Usuario implements UserDetails {
     }
 
     // Custom constructor for login and clave
-    public Usuario(String login, String clave) {
+    public Usuario(String login, String clave, Rol rol) {
         this.login = login;
         this.clave = clave;
+        this.rol = rol;
     }
 
     public Long getId() {

@@ -1,0 +1,32 @@
+services:
+  skillslink:
+    build: .
+    ports:
+     - "3000:3000"
+    environment:
+      DATABASE_URL: "jdbc:mysql://skills_link:3306/skilllink_db?createDatabaseIfNotExist=true&serverTimezone=UTC"
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: Kalavera2024
+      JWT_SECRET: 12345
+      URL_FRONT: "https://pruebamentora.netlify.app/"
+    restart: always
+    depends_on:
+      skills_link:
+        condition: service_healthy
+
+  skills_link:
+    image: mysql:9.1.0
+    ports:
+     - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Kalavera2024
+      MYSQL_PASSWORD: Kalavera2024
+      MYSQL_DATABASE: skilllink_db
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
+networks:
+  mynetwork:
+    driver: bridge
