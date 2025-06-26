@@ -71,6 +71,7 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("https://pruebamentora.netlify.app/"));
         configuration.setAllowedOriginPatterns(Arrays.asList("*")); // For development
         // For production, use specific origins:
         // configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://yourdomain.com"));
