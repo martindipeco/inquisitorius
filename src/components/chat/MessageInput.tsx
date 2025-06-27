@@ -6,17 +6,19 @@ interface MessageInputProps {
   onSendMessage: (content: string) => void;
   disabled?: boolean;
   placeholder?: string;
+  sending?: boolean;
 }
 
 export const MessageInput = ({ 
   onSendMessage, 
   disabled = false, 
-  placeholder = "Escribe un mensaje..." 
+  placeholder = "Escribe un mensaje...",
+  sending = false
 }: MessageInputProps) => {
   const [message, setMessage] = useState('');
 
   const handleSend = () => {
-    if (message.trim() && !disabled) {
+    if (message.trim() && !disabled && !sending) {
       onSendMessage(message.trim());
       setMessage('');
     }
@@ -37,8 +39,8 @@ export const MessageInput = ({
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder={placeholder}
-            disabled={disabled}
+            placeholder={sending ? "Enviando mensaje..." : placeholder}
+            disabled={disabled || sending}
             className="w-full px-3 py-2.5 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
             rows={1}
             style={{ minHeight: '44px', maxHeight: '120px' }}
@@ -46,12 +48,21 @@ export const MessageInput = ({
         </div>
         <button
           onClick={handleSend}
-          disabled={!message.trim() || disabled}
+          disabled={!message.trim() || disabled || sending}
           className="px-4 py-2.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors flex items-center gap-2 flex-shrink-0"
           style={{ height: '44px' }}
         >
-          <Icon icon="mdi:send" className="text-sm" />
-          <span className="hidden sm:inline">Enviar</span>
+          {sending ? (
+            <>
+              <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+              <span className="hidden sm:inline">Enviando...</span>
+            </>
+          ) : (
+            <>
+              <Icon icon="mdi:send" className="text-sm" />
+              <span className="hidden sm:inline">Enviar</span>
+            </>
+          )}
         </button>
       </div>
     </div>

@@ -1,14 +1,5 @@
 import { ImageWithFallback } from './ImageWithFallback';
-
-interface Curso {
-  id: string;
-  nombre: string;
-  descripcion: string;
-  profesor: string;
-  duracion: number;
-  imagen: string;
-  logoCurso: string;
-}
+import type { Curso } from '../services/cursosService';
 
 interface DropdownMenuProps {
   isOpen: boolean;

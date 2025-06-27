@@ -1,10 +1,12 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
-import { Curso as CursoComponent } from '../components/Curso';
+import { Curso as CursoCard } from '../components/Curso';
 import { Footer } from '../components/Footer';
-import { cursosService, type Curso } from '../services/cursosService';
+import { cursosService } from '../services/cursosService';
+import type { Curso } from '../services/cursosService';
 import { PROTECTED_ROUTES } from '../routes/routes';
+import { useToast } from '../contexts/ToastContext';
 
 // Componente de skeleton para evitar layout shifts
 const CursoSkeleton = () => (
@@ -32,6 +34,7 @@ const CursoSkeleton = () => (
 
 export const HomePage = () => {
   const navigate = useNavigate();
+  const { showInfo } = useToast();
   const [cursos, setCursos] = useState<Curso[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -61,7 +64,17 @@ export const HomePage = () => {
         await cursosService.preloadImagenes(cursosData);
       } catch (error) {
         console.error('Error cargando cursos:', error);
-        setError('No se pudieron cargar los cursos. Por favor, intenta de nuevo.');
+        
+        // Manejar errores específicos
+        if (error instanceof Error) {
+          if (error.message.includes('token') || error.message.includes('autenticación')) {
+            setError('Sesión expirada. Por favor, inicia sesión nuevamente.');
+          } else {
+            setError('No se pudieron cargar los cursos. Por favor, intenta de nuevo.');
+          }
+        } else {
+          setError('Error inesperado al cargar los cursos.');
+        }
       } finally {
         setLoading(false);
       }
@@ -71,17 +84,30 @@ export const HomePage = () => {
   }, []);
 
   const handleCursoSelect = (curso: Curso) => {
-    console.log('Curso seleccionado:', curso);
-    // Aquí puedes agregar navegación al detalle del curso
+    showInfo(
+      'Detalle del curso',
+      `La funcionalidad de detalle del curso "${curso.nombre}" está en desarrollo. Pronto podrás ver toda la información del curso.`
+    );
   };
 
   const handleCursoClick = (curso: Curso) => {
-    console.log('Curso clickeado:', curso);
-    // Aquí puedes agregar navegación al detalle del curso
+    showInfo(
+      'Detalle del curso',
+      `La funcionalidad de detalle del curso "${curso.nombre}" está en desarrollo. Pronto podrás ver toda la información del curso.`
+    );
   };
 
   const handleConfiguracionesClick = () => {
     navigate(PROTECTED_ROUTES.CONFIGURACIONES_PERFIL);
+  };
+
+  const handleReload = () => {
+    window.location.reload();
+  };
+
+  const handleLoginRedirect = () => {
+    // Redirigir al login si hay problemas de autenticación
+    navigate('/login');
   };
 
   // Renderizar skeletons mientras carga
@@ -94,22 +120,37 @@ export const HomePage = () => {
   );
 
   // Renderizar mensaje de error
-  const renderError = () => (
-    <div className="text-center py-12">
-      <div className="text-red-600 mb-4">
-        <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-        </svg>
+  const renderError = () => {
+    const isAuthError = error?.includes('Sesión expirada') || error?.includes('autenticación');
+    
+    return (
+      <div className="text-center py-12">
+        <div className="text-red-600 mb-4">
+          <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+          </svg>
+        </div>
+        <p className="text-gray-600 mb-4">{error}</p>
+        <div className="space-x-4">
+          {isAuthError ? (
+            <button 
+              onClick={handleLoginRedirect}
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+            >
+              Ir al login
+            </button>
+          ) : (
+            <button 
+              onClick={handleReload}
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+            >
+              Intentar de nuevo
+            </button>
+          )}
+        </div>
       </div>
-      <p className="text-gray-600 mb-4">{error}</p>
-      <button 
-        onClick={() => window.location.reload()}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
-      >
-        Intentar de nuevo
-      </button>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -152,7 +193,7 @@ export const HomePage = () => {
             ) : (
               <div className="grid-optimized">
                 {cursos.map((curso) => (
-                  <CursoComponent
+                  <CursoCard
                     key={curso.id}
                     {...curso}
                     onClick={() => handleCursoClick(curso)}

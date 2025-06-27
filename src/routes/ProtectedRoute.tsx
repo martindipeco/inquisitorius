@@ -10,7 +10,7 @@ interface ProtectedRouteProps {
 
 export const ProtectedRoute = ({ 
   children, 
-  redirectTo = PUBLIC_ROUTES.WELCOME 
+  redirectTo = PUBLIC_ROUTES.LOGIN 
 }: ProtectedRouteProps) => {
   const { isAuthenticated, isLoading } = useAuthContext();
   
@@ -24,7 +24,7 @@ export const ProtectedRoute = ({
   }
   
   if (!isAuthenticated) {
-    // Redirigir a la página de bienvenida con aviso de registro
+    // Redirigir directamente al login
     return <Navigate to={redirectTo} replace state={{ from: window.location.pathname }} />;
   }
   

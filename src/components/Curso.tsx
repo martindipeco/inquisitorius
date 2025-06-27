@@ -1,4 +1,5 @@
 import { ImageWithFallback } from './ImageWithFallback';
+import { useToast } from '../contexts/ToastContext';
 
 interface CursoProps {
   id: string;
@@ -8,8 +9,23 @@ interface CursoProps {
   duracion: number;
   imagen: string;
   logoCurso: string;
+  nivel: 'Inicial' | 'Intermedio' | 'Avanzado';
   onClick?: () => void;
 }
+
+// Función para obtener el color del nivel
+const getNivelColor = (nivel: string) => {
+  switch (nivel) {
+    case 'Inicial':
+      return 'bg-green-100 text-green-800';
+    case 'Intermedio':
+      return 'bg-yellow-100 text-yellow-800';
+    case 'Avanzado':
+      return 'bg-red-100 text-red-800';
+    default:
+      return 'bg-gray-100 text-gray-800';
+  }
+};
 
 export const Curso = ({ 
   nombre, 
@@ -18,12 +34,17 @@ export const Curso = ({
   duracion, 
   imagen, 
   logoCurso,
+  nivel,
   onClick 
 }: CursoProps) => {
+  const { showInfo } = useToast();
+
   const handleAgregarCurso = (e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log('Agregando curso:', nombre);
-    // Aquí iría la lógica para agregar el curso
+    showInfo(
+      'Agregar curso',
+      `La funcionalidad para agregar el curso "${nombre}" está en desarrollo. Pronto podrás inscribirte en este curso.`
+    );
   };
 
   return (
@@ -42,9 +63,14 @@ export const Curso = ({
             skeletonClassName="border border-gray-200"
           />
           <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-semibold text-gray-900 truncate">
-              {nombre}
-            </h3>
+            <div className="flex items-center space-x-2 mb-1">
+              <h3 className="text-lg font-semibold text-gray-900 truncate">
+                {nombre}
+              </h3>
+              <span className={`px-2 py-1 text-xs font-medium rounded-full ${getNivelColor(nivel)}`}>
+                {nivel}
+              </span>
+            </div>
             <p className="text-sm text-gray-600">
               {duracion} horas
             </p>

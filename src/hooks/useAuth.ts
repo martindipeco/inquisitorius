@@ -21,10 +21,10 @@ export const useAuth = () => {
   }, []);
 
   // Login
-  const login = useCallback(async (email: string, password: string) => {
+  const login = useCallback(async (usuario: string, password: string) => {
     setIsLoading(true);
     try {
-      const response = await authService.login({ email, password });
+      const response = await authService.login({ usuario, password });
       
       if (response.success && response.user) {
         setUser(response.user);

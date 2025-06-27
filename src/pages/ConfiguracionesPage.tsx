@@ -120,7 +120,7 @@ export const ConfiguracionesPage = () => {
         <TabNavigation items={tabItems} onItemClick={handleTabClick} />
         <div className="flex-1 overflow-auto">
           <div className="p-4 sm:p-6 lg:p-8">
-            <AnimatedContent key={activeSection}>
+            <AnimatedContent key={activeSection} animationKey={activeSection}>
               {renderContent()}
             </AnimatedContent>
           </div>

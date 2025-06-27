@@ -1,20 +1,19 @@
 import { Icon } from '@iconify/react';
 import type { Conversation } from '../../types/messageSchema';
-import { messageService } from '../../services/messageService';
-import { useState, useEffect } from 'react';
 
 interface ConversationListProps {
   conversations: Conversation[];
   currentUserId: number;
   selectedConversationId?: number;
   onSelectConversation: (conversation: Conversation) => void;
-  onNewConversation?: () => void;
+  users: User[];
+  usersLoading: boolean;
 }
 
 interface User {
   id: number;
   nombre: string;
-  avatarUrl: string;
+  avatarUrl: string | null;
 }
 
 export const ConversationList = ({
@@ -22,18 +21,9 @@ export const ConversationList = ({
   currentUserId,
   selectedConversationId,
   onSelectConversation,
-  onNewConversation
+  users,
+  usersLoading
 }: ConversationListProps) => {
-  const [users, setUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    const loadUsers = async () => {
-      const usersData = await messageService.obtenerUsuarios();
-      setUsers(usersData);
-    };
-    loadUsers();
-  }, []);
-
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
     const now = new Date();
@@ -62,7 +52,18 @@ export const ConversationList = ({
 
   const getOtherUser = (conversation: Conversation) => {
     const otherUserId = getOtherUserId(conversation);
-    return users.find(u => u.id === otherUserId);
+    const userData = users.find(u => u.id === otherUserId);
+    
+    // Si los usuarios están cargando, mostrar un indicador
+    if (usersLoading) {
+      return {
+        id: otherUserId,
+        nombre: `Cargando...`,
+        avatarUrl: null
+      };
+    }
+    
+    return userData;
   };
 
   const getUnreadCount = (conversation: Conversation) => {
@@ -77,15 +78,6 @@ export const ConversationList = ({
       <div className="p-4 border-b border-gray-200 flex-shrink-0">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gray-800">Mensajes</h2>
-          {onNewConversation && (
-            <button
-              onClick={onNewConversation}
-              className="p-2 text-gray-500 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-colors"
-              title="Nueva conversación"
-            >
-              <Icon icon="mdi:plus" className="text-lg" />
-            </button>
-          )}
         </div>
       </div>
 
@@ -126,8 +118,8 @@ export const ConversationList = ({
                         }}
                       />
                     ) : null}
-                    <div className={`w-full h-full bg-gray-300 rounded-full flex items-center justify-center text-gray-600 font-medium text-sm ${userData?.avatarUrl ? 'hidden' : ''}`}>
-                      {otherUser}
+                    <div className={`w-full h-full bg-gray-300 rounded-full flex items-center justify-center text-gray-600 ${userData?.avatarUrl ? 'hidden' : ''}`}>
+                      <Icon icon="mdi:account" className="text-lg" />
                     </div>
                   </div>
                   
@@ -135,6 +127,9 @@ export const ConversationList = ({
                     <div className="flex items-center justify-between">
                       <h3 className="font-medium text-gray-800 truncate">
                         {userData?.nombre || `Usuario ${otherUser}`}
+                        {usersLoading && userData?.nombre === `Cargando...` && (
+                          <span className="ml-2 inline-block w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></span>
+                        )}
                       </h3>
                       {conversation.ultimoMensaje && (
                         <span className="text-xs text-gray-500 flex-shrink-0 ml-2">

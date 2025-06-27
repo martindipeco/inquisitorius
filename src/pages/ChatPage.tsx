@@ -1,14 +1,30 @@
 import { Chat } from '../components/chat/Chat';
 import { Navbar } from '../components/Navbar';
+import { useAuthContext } from '../hooks/useAuthContext';
+import { Navigate } from 'react-router-dom';
+import { PUBLIC_ROUTES } from '../routes/routes';
 
 export const ChatPage = () => {
-  // Por ahora usamos un ID fijo, en el futuro esto vendría del contexto de autenticación
-  const currentUserId = 1;
+  const { user, isAuthenticated, isLoading } = useAuthContext();
+
+  // Mostrar loading mientras se verifica la autenticación
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  // Redirigir si no está autenticado
+  if (!isAuthenticated || !user) {
+    return <Navigate to={PUBLIC_ROUTES.LOGIN} replace />;
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       {/* Navbar */}
-      <Navbar currentUserId={currentUserId} />
+      <Navbar currentUserId={user.id} />
       
       {/* Main Content */}
       <main className="flex-1">
@@ -21,7 +37,7 @@ export const ChatPage = () => {
           </div>
           
           <div className="h-[calc(100vh-200px)]">
-            <Chat currentUserId={currentUserId} />
+            <Chat currentUserId={user.id} />
           </div>
         </div>
       </main>

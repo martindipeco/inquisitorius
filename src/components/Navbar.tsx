@@ -5,16 +5,8 @@ import { DropdownMenu } from './DropdownMenu';
 import { PUBLIC_ROUTES, PROTECTED_ROUTES } from '../routes/routes';
 import { messageService } from '../services/messageService';
 import { useAuthContext } from '../hooks/useAuthContext';
-
-interface Curso {
-  id: string;
-  nombre: string;
-  descripcion: string;
-  profesor: string;
-  duracion: number;
-  imagen: string;
-  logoCurso: string;
-}
+import { useToast } from '../contexts/ToastContext';
+import type { Curso } from '../services/cursosService';
 
 interface NavbarProps {
   cursos?: Curso[];
@@ -35,6 +27,7 @@ export const Navbar = ({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const { user, isAuthenticated, logout } = useAuthContext();
+  const { showInfo } = useToast();
 
   // Usar el ID del usuario autenticado o el proporcionado como prop
   const userId = currentUserId || user?.id || 1;
@@ -83,8 +76,16 @@ export const Navbar = ({
   };
 
   const handleLogout = () => {
-    logout();
-    navigate(PUBLIC_ROUTES.WELCOME);
+    showInfo(
+      'Sesión cerrada',
+      'Has cerrado sesión exitosamente. Gracias por usar nuestra plataforma.'
+    );
+    
+    // Pequeño delay para que se vea el toast antes de redirigir
+    setTimeout(() => {
+      logout();
+      navigate(PUBLIC_ROUTES.WELCOME);
+    }, 1000);
   };
 
   const isChatActive = location.pathname === PROTECTED_ROUTES.CHAT;

@@ -1,50 +1,83 @@
 import type { DatosRegistrarUsuario } from '../types/registerSchema';
 
-// Simular base de datos de usuarios registrados
-let registeredUsers: Array<DatosRegistrarUsuario & { id: number; fechaRegistro: string }> = [
-  {
-    id: 1,
-    email: 'test@example.com',
-    password: 'Test1234',
-    rol: 'USUARIO',
-    fechaRegistro: '2024-01-01T00:00:00Z'
-  }
-];
+// URL base de la API
+const API_BASE_URL = 'https://inquisitorius.onrender.com';
 
-let nextId = 2;
+// Interfaz para el payload que espera la API
+interface RegisterPayload {
+  login: string;
+  clave: string;
+  rol: string;
+}
 
 export const registerService = {
   // Registrar un nuevo usuario
   async registrarUsuario(datos: DatosRegistrarUsuario): Promise<{ success: boolean; message?: string }> {
     try {
-      // Simular delay de red
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Mapear los datos del formulario a la estructura que espera la API
+      const payload: RegisterPayload = {
+        login: datos.usuario,
+        clave: datos.password,
+        rol: 'USER' // Asignar automáticamente el rol USER a todos los registros
+      };
 
-      // Verificar si el usuario ya existe
-      const usuarioExistente = registeredUsers.find(user => user.email === datos.email);
-      if (usuarioExistente) {
-        return {
-          success: false,
-          message: 'El correo electrónico ya está registrado'
-        };
+      const response = await fetch(`${API_BASE_URL}/registro`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      // Manejar diferentes códigos de estado
+      switch (response.status) {
+        case 200:
+          return {
+            success: true,
+            message: 'Usuario registrado exitosamente'
+          };
+        
+        case 400:
+          return {
+            success: false,
+            message: 'El usuario ya está registrado'
+          };
+        
+        case 403:
+          return {
+            success: false,
+            message: 'Acceso denegado. Verifica tus credenciales.'
+          };
+        
+        case 404:
+          return {
+            success: false,
+            message: 'Servicio de registro no disponible.'
+          };
+        
+        case 500:
+          return {
+            success: false,
+            message: 'Error interno del servidor. Intenta más tarde.'
+          };
+        
+        default:
+          return {
+            success: false,
+            message: `Error inesperado (${response.status}). Intenta de nuevo.`
+          };
       }
-
-      // Crear nuevo usuario
-      const nuevoUsuario = {
-        id: nextId++,
-        ...datos,
-        rol: 'USUARIO' as const, // Por defecto es USUARIO
-        fechaRegistro: new Date().toISOString()
-      };
-
-      registeredUsers.push(nuevoUsuario);
-
-      return {
-        success: true,
-        message: 'Usuario registrado exitosamente'
-      };
     } catch (error) {
       console.error('Error en registro:', error);
+      
+      // Manejar errores de red específicos
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        return {
+          success: false,
+          message: 'Error de conexión. Verifica tu conexión a internet.'
+        };
+      }
+      
       return {
         success: false,
         message: 'Error interno del servidor'
@@ -52,32 +85,50 @@ export const registerService = {
     }
   },
 
-  // Verificar si un email ya está registrado
-  async verificarEmailExistente(email: string): Promise<boolean> {
+  // Verificar si un usuario ya está registrado
+  async verificarUsuarioExistente(usuario: string): Promise<boolean> {
     try {
-      // Simular delay de red
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      return registeredUsers.some(user => user.email === email);
+      // Intentar registrar un usuario temporal para verificar si el usuario existe
+      // La API devolverá 400 si el usuario ya está registrado
+      const payload: RegisterPayload = {
+        login: usuario,
+        clave: 'temp_password_for_check', // Contraseña temporal
+        rol: 'USER'
+      };
+
+      const response = await fetch(`${API_BASE_URL}/registro`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      // Si devuelve 400, significa que el usuario ya existe
+      return response.status === 400;
     } catch (error) {
-      console.error('Error verificando email:', error);
-      return false;
+      console.error('Error verificando usuario:', error);
+      return false; // En caso de error, permitir el registro
     }
   },
 
-  // Obtener todos los usuarios (para debugging)
-  async obtenerUsuarios() {
-    return registeredUsers.map(user => ({
-      id: user.id,
-      email: user.email,
-      rol: user.rol,
-      fechaRegistro: user.fechaRegistro
-    }));
-  },
-
-  // Limpiar datos de prueba
-  async limpiarDatosPrueba() {
-    registeredUsers = [];
-    nextId = 1;
+  // Método para probar la conectividad con la API
+  async probarConexion(): Promise<{ success: boolean; message?: string }> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/registro`, {
+        method: 'OPTIONS', // Usar OPTIONS para verificar conectividad sin enviar datos
+      });
+      
+      return {
+        success: response.ok,
+        message: response.ok ? 'Conexión exitosa' : `Error de conexión: ${response.status}`
+      };
+    } catch (error) {
+      console.error('Error probando conexión:', error);
+      return {
+        success: false,
+        message: 'No se pudo conectar con el servidor'
+      };
+    }
   }
 }; 

@@ -11,6 +11,7 @@ import { useToast } from '../contexts/ToastContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { PUBLIC_ROUTES, PROTECTED_ROUTES } from '../routes/routes';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { WelcomeNavbar } from '../components/WelcomeNavbar';
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,7 +26,7 @@ export default function LoginPage() {
     formState,
   } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
-    defaultValues: { email: '', password: '' },
+    defaultValues: { usuario: '', password: '' },
     mode: 'onSubmit', // Validación solo al enviar el formulario
   });
 
@@ -36,7 +37,7 @@ export default function LoginPage() {
 
   const onSubmit = useCallback(async (data: LoginForm) => {
     try {
-      const response = await login(data.email, data.password);
+      const response = await login(data.usuario, data.password);
 
       if (response.success) {
         showSuccess("¡Bienvenido!", response.message || "Has iniciado sesión correctamente");
@@ -87,9 +88,13 @@ export default function LoginPage() {
   const isSubmitting = formState.isSubmitting || authLoading;
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen bg-[#F0F3FB] font-['Inter']">
+      {/* Navigation */}
+      <WelcomeNavbar />
+      
+      {/* Main Content */}
       <main 
-        className="min-h-screen flex items-center justify-center bg-[#F0F3FB] font-['Inter'] p-4"
+        className="flex-1 flex items-center justify-center p-4"
         role="main"
         aria-labelledby="login-title"
       >
@@ -112,19 +117,19 @@ export default function LoginPage() {
             noValidate
           >
             <Input
-              label="Correo electrónico"
-              type="email"
-              placeholder="ejemplo@gmail.com"
-              error={formState.errors.email?.message}
-              autoComplete="email"
-              aria-describedby={formState.errors.email ? "email-error" : undefined}
-              aria-invalid={!!formState.errors.email}
-              {...register('email')}
+              label="Usuario"
+              type="text"
+              placeholder="Martin21"
+              error={formState.errors.usuario?.message}
+              autoComplete="username"
+              aria-describedby={formState.errors.usuario ? "usuario-error" : undefined}
+              aria-invalid={!!formState.errors.usuario}
+              {...register('usuario')}
             />
             
-            {formState.errors.email && (
-              <div id="email-error" className="sr-only" role="alert">
-                Error en el correo: {formState.errors.email.message}
+            {formState.errors.usuario && (
+              <div id="usuario-error" className="sr-only" role="alert">
+                Error en el usuario: {formState.errors.usuario.message}
               </div>
             )}
             
@@ -236,6 +241,6 @@ export default function LoginPage() {
           </div>
         </div>
       </main>
-    </>
+    </div>
   );
 } 

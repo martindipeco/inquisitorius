@@ -9,18 +9,20 @@ interface ChatWindowProps {
   conversation: Conversation;
   currentUserId: number;
   onBack?: () => void;
+  onMessageSent?: (message: Message) => void;
 }
 
 interface User {
   id: number;
   nombre: string;
-  avatarUrl: string;
+  avatarUrl: string | null;
 }
 
-export const ChatWindow = ({ conversation, currentUserId, onBack }: ChatWindowProps) => {
+export const ChatWindow = ({ conversation, currentUserId, onBack, onMessageSent }: ChatWindowProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<User[]>([]);
+  const [sendingMessage, setSendingMessage] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const otherUserId = conversation.usuario1Id === currentUserId 
@@ -39,16 +41,22 @@ export const ChatWindow = ({ conversation, currentUserId, onBack }: ChatWindowPr
   const loadMessages = async () => {
     setLoading(true);
     try {
-      const conversationMessages = await messageService.obtenerConversacion(
-        conversation.usuario1Id,
-        conversation.usuario2Id
-      );
-      setMessages(conversationMessages);
+      // Si la conversación ya tiene mensajes cargados, usarlos
+      if (conversation.mensajes && conversation.mensajes.length > 0) {
+        setMessages(conversation.mensajes);
+      } else {
+        // Solo cargar desde la API si no hay mensajes
+        const conversationMessages = await messageService.obtenerConversacion(
+          conversation.usuario1Id,
+          conversation.usuario2Id
+        );
+        setMessages(conversationMessages);
+      }
       
       // Marcar mensajes como leídos
-      conversationMessages
+      messages
         .filter(m => m.receptorId === currentUserId && !m.leido)
-        .forEach(m => messageService.marcarComoLeido(m.id));
+        .forEach(() => messageService.marcarComoLeido());
     } catch (error) {
       console.error('Error loading messages:', error);
     } finally {
@@ -70,16 +78,49 @@ export const ChatWindow = ({ conversation, currentUserId, onBack }: ChatWindowPr
   };
 
   const handleSendMessage = async (content: string) => {
+    // Crear mensaje optimista (temporal)
+    const optimisticMessage: Message = {
+      id: Date.now(), // ID temporal
+      contenido: content,
+      remitenteId: currentUserId,
+      receptorId: otherUserId,
+      fechaEnvio: new Date().toISOString(),
+      leido: false,
+      isOptimistic: true // Marca para identificar mensajes optimistas
+    };
+
+    // Agregar mensaje optimista inmediatamente
+    setMessages(prev => [...prev, optimisticMessage]);
+    setSendingMessage(true);
+
     try {
-      const newMessage = await messageService.crearMensaje({
+      // Enviar mensaje real al servidor
+      const realMessage = await messageService.crearMensaje({
         contenido: content,
         remitenteId: currentUserId,
         receptorId: otherUserId,
       });
       
-      setMessages(prev => [...prev, newMessage]);
+      // Reemplazar mensaje optimista con el real
+      setMessages(prev => prev.map(msg => 
+        msg.isOptimistic && msg.contenido === content 
+          ? { ...realMessage, isOptimistic: false }
+          : msg
+      ));
+
+      // Notificar al componente padre
+      if (onMessageSent) {
+        onMessageSent(realMessage);
+      }
     } catch (error) {
       console.error('Error sending message:', error);
+      // Remover mensaje optimista si falla
+      setMessages(prev => prev.filter(msg => 
+        !(msg.isOptimistic && msg.contenido === content)
+      ));
+      // Aquí podrías mostrar un toast de error
+    } finally {
+      setSendingMessage(false);
     }
   };
 
@@ -125,8 +166,8 @@ export const ChatWindow = ({ conversation, currentUserId, onBack }: ChatWindowPr
                 }}
               />
             ) : null}
-            <div className={`w-full h-full bg-gray-300 rounded-full flex items-center justify-center text-gray-600 font-medium text-sm ${otherUser?.avatarUrl ? 'hidden' : ''}`}>
-              {otherUserId}
+            <div className={`w-full h-full bg-gray-300 rounded-full flex items-center justify-center text-gray-600 ${otherUser?.avatarUrl ? 'hidden' : ''}`}>
+              <Icon icon="mdi:account" className="text-lg" />
             </div>
           </div>
           
@@ -181,6 +222,7 @@ export const ChatWindow = ({ conversation, currentUserId, onBack }: ChatWindowPr
         onSendMessage={handleSendMessage}
         disabled={loading}
         placeholder="Escribe un mensaje..."
+        sending={sendingMessage}
       />
     </div>
   );

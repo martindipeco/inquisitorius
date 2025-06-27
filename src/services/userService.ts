@@ -19,7 +19,85 @@ interface MockUser {
   rol: 'USUARIO' | 'ADMIN';
 }
 
+// Tipo para usuarios de la API
+interface ApiUser {
+  id: number;
+  login: string;
+}
+
+const API_BASE_URL = 'https://inquisitorius.onrender.com/api';
+
+// Cache mejorado para usuarios
+let usersCache: User[] | null = null;
+let usersCacheTimestamp: number = 0;
+const CACHE_DURATION = 10 * 60 * 1000; // 10 minutos
+
+const getAuthToken = (): string | null => {
+  return localStorage.getItem('authToken');
+};
+
 class UserService {
+  /**
+   * Obtiene todos los usuarios desde la API con cache
+   */
+  async getAllUsers(): Promise<User[]> {
+    // Verificar si tenemos cache válido
+    const now = Date.now();
+    if (usersCache && (now - usersCacheTimestamp) < CACHE_DURATION) {
+      return usersCache;
+    }
+
+    try {
+      const token = getAuthToken();
+      
+      if (!token) {
+        throw new Error('No hay token de autenticación');
+      }
+
+      const response = await fetch(`${API_BASE_URL}/usuarios`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error('Token de autenticación inválido');
+        }
+        throw new Error(`Error al obtener usuarios: ${response.status}`);
+      }
+
+      const apiUsers: ApiUser[] = await response.json();
+      
+      const mappedUsers = apiUsers.map(apiUser => ({
+        id: apiUser.id.toString(),
+        nombre: apiUser.login.split('@')[0] || `Usuario ${apiUser.id}`,
+        email: apiUser.login,
+        bio: '',
+        avatarUrl: undefined
+      }));
+
+      // Actualizar cache
+      usersCache = mappedUsers;
+      usersCacheTimestamp = now;
+
+      return mappedUsers;
+    } catch (error) {
+      console.error('Error obteniendo usuarios:', error);
+      throw new Error('No se pudieron obtener los usuarios');
+    }
+  }
+
+  /**
+   * Limpia el cache de usuarios (útil para forzar refrescar datos)
+   */
+  clearCache(): void {
+    usersCache = null;
+    usersCacheTimestamp = 0;
+  }
+
   /**
    * Obtiene los datos de un usuario por su ID.
    * En una app real, este ID vendría del estado de autenticación.
@@ -69,9 +147,9 @@ class UserService {
       const currentUser = (usersData as MockUser[])[userIndex];
       const updatedUser = {
         id: currentUser.id.toString(),
-        nombre: data.nombreCompleto || currentUser.nombre || '',
-        email: data.email,
-        bio: data.bio || '',
+        nombre: data.login || currentUser.nombre || '',
+        email: data.login, // Usar login como email
+        bio: '',
         avatarUrl: undefined
       };
 

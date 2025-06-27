@@ -40,11 +40,9 @@ export const ConfirmationModal = ({ isOpen, onClose, onConfirm, title, descripti
                     <Dialog.Title className="text-lg font-semibold text-gray-900">
                       {title}
                     </Dialog.Title>
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-600">
-                        {description}
-                      </p>
-                    </div>
+                    <Dialog.Description className="mt-2 text-sm text-gray-600">
+                      {description}
+                    </Dialog.Description>
                   </div>
                   <Dialog.Close asChild>
                     <button className="text-gray-400 hover:text-gray-600 transition-colors">

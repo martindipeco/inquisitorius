@@ -15,7 +15,9 @@ export const createMessageSchema = z.object({
   receptorId: z.number(),
 });
 
-export type Message = z.infer<typeof messageSchema>;
+export type Message = z.infer<typeof messageSchema> & {
+  isOptimistic?: boolean;
+};
 export type CreateMessage = z.infer<typeof createMessageSchema>;
 
 export interface Conversation {
