@@ -1,4 +1,5 @@
-# Mentora – Plataforma de Mentoría y Certificación
+![Logo_png](https://github.com/user-attachments/assets/985c8518-80db-4926-80c7-e46271f016d5)
+# Plataforma de Mentoría y Certificación
 
 **Mentora** es una plataforma educativa integral que conecta estudiantes y mentores mediante un entorno digital seguro y colaborativo. El sistema está dividido en dos partes:
 
@@ -47,6 +48,14 @@ Este repositorio busca fomentar el aprendizaje significativo, la trazabilidad de
 - **Insomnia para pruebas REST**
 
 ---
+
+## 🧭 Recursos en línea
+
+- [🌐 Frontend (Netlify)](https://pruebamentora.netlify.app/)
+- [📑 Swagger UI – Documentación de la API](https://inquisitorius.onrender.com/swagger-ui/index.html)
+  
+---
+
 
 ## 📁 Estructura del Proyecto (Frontend)
 
