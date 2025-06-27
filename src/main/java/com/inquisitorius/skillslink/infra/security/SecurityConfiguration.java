@@ -35,7 +35,7 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers(HttpMethod.POST, "/login", "/registro").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/mentorias", "/api/certificaciones/{id}", "/api/cursos/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/", "/api/mentorias", "/api/certificaciones/{id}", "/api/cursos/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         //.requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         // SpringDoc OpenAPI paths
