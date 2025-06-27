@@ -25,13 +25,17 @@ public class AutenticacionController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity autenticarUsuario(@RequestBody @Valid DatosAutenticacionUsuario datosAutenticacionUsuario)
-    {
+    public ResponseEntity<DatosRespuestaAutenticacionUsuario> autenticarUsuario(@RequestBody @Valid DatosAutenticacionUsuario datosAutenticacionUsuario) {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 datosAutenticacionUsuario.login(), datosAutenticacionUsuario.clave()
         );
         var usuarioAutenticado = authenticationManager.authenticate(authToken);
-        var jwToken = tokenService.generarToken((Usuario) usuarioAutenticado.getPrincipal());
-        return ResponseEntity.ok(new DatosJwToken(jwToken));
-    }
+        Usuario usuario = (Usuario) usuarioAutenticado.getPrincipal();
+        
+        var jwToken = tokenService.generarToken(usuario);
+        
+        return ResponseEntity.ok(new DatosRespuestaAutenticacionUsuario(
+                jwToken,
+                usuario.getId(),
+        ));
 }
