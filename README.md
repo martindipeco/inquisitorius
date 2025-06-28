@@ -1,4 +1,5 @@
-![Logo_png](https://github.com/user-attachments/assets/985c8518-80db-4926-80c7-e46271f016d5)
+<img src="https://github.com/user-attachments/assets/985c8518-80db-4926-80c7-e46271f016d5" alt="Logo" width="200" height="auto" style="max-width: 200px; height: auto;">
+
 # Plataforma de Mentoría y Certificación
 
 **Mentora** es una plataforma educativa integral que conecta estudiantes y mentores mediante un entorno digital seguro y colaborativo. El sistema está dividido en dos partes:
@@ -10,24 +11,24 @@ Este repositorio busca fomentar el aprendizaje significativo, la trazabilidad de
 
 ---
 
-## 📌 Características Principales
+## 🚀 Características Principales
 
-- 🧠 Autenticación y autorización con JWT
-- 🧑‍🏫 Perfiles diferenciados para estudiantes y mentores
-- 🌐 Comunidad con filtrado de habilidades, intereses y ubicación
+- 🔐 Autenticación y autorización con JWT
+- �� Perfiles diferenciados para estudiantes y mentores
+- �� Comunidad con filtrado de habilidades, intereses y ubicación
 - 🎯 Participación en desafíos, cursos y mentorías
-- ✉️ Sistema de mensajería entre usuarios en tiempo real
+- 💬 Sistema de mensajería entre usuarios en tiempo real
 - 🏆 Visualización de logros e insignias
 - 📚 Gestión de cursos y niveles de dificultad
 - 🏅 Registro y validación de certificaciones académicas
-- 🔒 Rutas protegidas y control de acceso por roles (`ADMIN`, `MENTOR`, `USER`)
-- 🧭 SPA (Single Page Application) con navegación fluida y sin recarga
+- 🛡️ Rutas protegidas y control de acceso por roles (`ADMIN`, `MENTOR`, `USER`)
+- ⚡ SPA (Single Page Application) con navegación fluida y sin recarga
 
 ---
 
 ## 🛠️ Tecnologías Utilizadas
 
-### 🔷 Frontend
+### 🎨 Frontend
 
 - **React 18**
 - **TypeScript**
@@ -35,9 +36,8 @@ Este repositorio busca fomentar el aprendizaje significativo, la trazabilidad de
 - **TailwindCSS**
 - **React Router**
 - **PostCSS + Autoprefixer**
-- **Mock JSON para pruebas**
 
-### 🔷 Backend
+### ⚙️ Backend
 
 - **Java 17+**
 - **Spring Boot**
@@ -49,74 +49,126 @@ Este repositorio busca fomentar el aprendizaje significativo, la trazabilidad de
 
 ---
 
-## 🧭 Recursos en línea
+## 🔗 Recursos en línea
 
 - [🌐 Frontend (Netlify)](https://pruebamentora.netlify.app/)
 - [📑 Swagger UI – Documentación de la API](https://inquisitorius.onrender.com/swagger-ui/index.html)
   
 ---
 
+# 🎨 FRONTEND
 
-## 📁 Estructura del Proyecto (Frontend)
+## 🗂️ Estructura del Proyecto Frontend
 
 ```plaintext
 src/
-│
-├── assets/               # Imágenes y archivos estáticos
-│   └── images/
-│       └── Imagen2_estudiantes_sinLogin_ppal.jpg
-│
-├── components/           # Componentes reutilizables
-│   └── common/
-│       ├── Header.tsx
-│       └── Footer.tsx
-│
-├── pages/                # Vistas principales
-│   ├── Login.tsx
-│   ├── Register.tsx
-│   ├── Dashboard.tsx
-│   ├── Home.tsx
-│   ├── Community.tsx
-│   ├── Challenges.tsx
-│   ├── Messaging.tsx
-│   ├── Progress.tsx
-│   ├── UserProfile.tsx
-│   └── Mentorships.tsx
-│
-├── routes/               # Enrutamiento SPA
-│   └── AppRouter.tsx
-│
-├── styles/               # Estilos personalizados
-│   └── login.css
-│
-├── App.tsx
-├── main.tsx
-└── index.css
+├── components/           # Componentes React reutilizables
+│   ├── chat/            # Sistema de mensajería
+│   │   ├── Chat.tsx
+│   │   ├── ChatWindow.tsx
+│   │   ├── ConversationList.tsx
+│   │   ├── MessageBubble.tsx
+│   │   ├── MessageInput.tsx
+│   │   └── index.ts
+│   ├── configuraciones/ # Componentes de configuración
+│   │   ├── CertificationsContent.tsx
+│   │   ├── EditProfileContent.tsx
+│   │   ├── MyCoursesContent.tsx
+│   │   ├── NotificationsContent.tsx
+│   │   └── SecurityContent.tsx
+│   ├── Toast/           # Sistema de notificaciones
+│   │   ├── Toast.tsx
+│   │   ├── ToastContainer.tsx
+│   │   ├── ToastExample.tsx
+│   │   └── ToastProvider.tsx
+│   ├── AnimatedContent.tsx
+│   ├── AnimatedText.tsx
+│   ├── AuthAlert.tsx
+│   ├── Button.tsx
+│   ├── ConfirmationModal.tsx
+│   ├── Curso.tsx
+│   ├── DropdownMenu.tsx
+│   ├── Footer.tsx
+│   ├── ImageUpload.tsx
+│   ├── ImageWithFallback.tsx
+│   ├── Input.tsx
+│   ├── Navbar.tsx
+│   ├── ScrollAnimation.tsx
+│   ├── SocialButton.tsx
+│   ├── TabNavigation.tsx
+│   └── WelcomeNavbar.tsx
+├── contexts/            # Contextos de React para estado global
+│   ├── AuthContext.tsx
+│   ├── AuthContextDef.ts
+│   └── ToastContext.tsx
+├── hooks/               # Custom hooks personalizados
+│   ├── useAuth.ts
+│   ├── useAuthContext.ts
+│   └── useToast.ts
+├── mocks/               # Datos de prueba para simular APIs
+│   ├── certifications.json
+│   ├── cursos.json
+│   ├── enrolledCourses.json
+│   ├── messages.json
+│   └── users.json
+├── pages/               # Componentes que representan páginas completas
+│   ├── AboutPage.tsx
+│   ├── ChatPage.tsx
+│   ├── ConfiguracionesPage.tsx
+│   ├── HelpPage.tsx
+│   ├── HomePage.tsx
+│   ├── LoginPage.tsx
+│   ├── NotFoundPage.tsx
+│   ├── RegisterPage.tsx
+│   └── WelcomePage.tsx
+├── routes/              # Lógica y configuración de enrutamiento
+│   ├── index.tsx
+│   ├── ProtectedRoute.tsx
+│   ├── README.md
+│   └── routes.ts
+├── services/            # Lógica para interactuar con APIs externas
+│   ├── authService.ts
+│   ├── certificationService.ts
+│   ├── cursosService.ts
+│   ├── messageService.ts
+│   ├── registerService.ts
+│   └── userService.ts
+├── types/               # Definiciones de tipos y esquemas de TypeScript
+│   ├── certificationSchema.ts
+│   ├── loginSchema.ts
+│   ├── messageSchema.ts
+│   ├── profileSchema.ts
+│   └── registerSchema.ts
+├── App.tsx              # Componente raíz de la aplicación
+├── index.css            # Estilos globales y de Tailwind
+├── main.tsx             # Punto de entrada principal de la aplicación
+└── vite-env.d.ts        # Tipos de Vite
 ```
----
 
-## 🎨 Estilo y Diseño (Frontend)
+## 🎨 Estilo y Diseño
 
 El diseño de Mentora está pensado para ser limpio, accesible y responsivo, adaptado tanto para estudiantes como mentores.
 
-### 🔧 Estilo y Layout
+### 🧰 Bibliotecas y Herramientas Visuales
 
-- Inputs de login y formularios con diseño compacto, color blanco y responsividad.
-- Botones de envío con color primario `#00B4D8` y mismo ancho que los campos de entrada.
-- Página de login alineada a la derecha, con imagen de fondo de estudiantes.
-- Header con fondo en color `#006D77` y texto blanco.
-- Footer con un diseño coherente al del header para mantener armonía visual.
+- **React Hook Form**: Manejo eficiente de formularios con validación y optimización de re-renders
+- **Zod**: Validación de esquemas TypeScript para formularios y datos
+- **Radix UI**: Componentes de UI accesibles y personalizables (dropdowns, modales, etc.)
+- **Iconify**: Biblioteca de iconos optimizada con lazy loading para mejor performance
+- **Framer Motion**: Animaciones fluidas y transiciones para mejorar la experiencia de usuario
+- **React Router**: Navegación SPA con rutas protegidas y transiciones suaves
+- **Toast Notifications**: Sistema de notificaciones para feedback inmediato al usuario
+- **CSS Modules**: Organización modular de estilos para evitar conflictos de CSS
 
----
-
-## ✨ Funcionalidades Visuales del Frontend
+## ✨ Funcionalidades Implementadas
 
 - **Validaciones** en formularios:
   - Correos deben contener `@`
-  - Contraseñas deben tener entre 6 y 12 caracteres
+  - Contraseñas deben tener entre 6 y 12 caracteres (alfanumérico)
 - **Efectos visuales** para:
   - Transiciones de pantalla
   - Confirmación de registro exitoso
+  - Animaciones de contenido y texto
 - **SPA completamente funcional**:
   - Navegación rápida y fluida sin recarga
   - Rutas protegidas por rol (`USER`, `MENTOR`, `ADMIN`)
@@ -137,20 +189,14 @@ El diseño de Mentora está pensado para ser limpio, accesible y responsivo, ada
     - Uso de modales y componentes visuales
 - **Estilos con TailwindCSS** para garantizar adaptabilidad en múltiples dispositivos
 - **Simulación con datos mock** en frontend, pensada para integrarse con backend Spring Boot
+- **Sistema de notificaciones Toast** para feedback del usuario
+- **Componentes animados** para mejorar la experiencia de usuario
 
----
+## 👥 Roles de Usuario (Frontend)
 
-## 🔐 Roles de Usuario
+Mentora implementa un sistema de control de acceso basado en roles para ofrecer experiencias diferenciadas según el tipo de usuario.
 
-Mentora implementa un sistema de control de acceso basado en roles para ofrecer experiencias diferenciadas según el tipo de usuario. Los roles definidos son:
-
-- `USER` (Estudiante)
-- `MENTOR`
-- `ADMIN` (solo en backend)
-
----
-
-### 👨‍🎓 Usuario (Estudiante)
+### 🎓 Usuario (Estudiante) - **✅ Implementado**
 
 - Accede a un **inicio personalizado** con mensaje motivacional
 - Consulta la **lista de cursos disponibles**
@@ -159,9 +205,7 @@ Mentora implementa un sistema de control de acceso basado en roles para ofrecer 
 - Puede **editar su perfil personal**
 - Participa en la **comunidad**, interactúa en desafíos y utiliza el sistema de **mensajería interna**
 
----
-
-### 🧑‍🏫 Mentor
+### 👨‍🏫 Mentor - **⏳ Pendiente de implementación**
 
 - Visualiza su lista de **mentorías activas**
 - Puede **crear nuevas mentorías** a través de un formulario especializado
@@ -169,9 +213,7 @@ Mentora implementa un sistema de control de acceso basado en roles para ofrecer 
 - Tiene acceso al sistema de **mensajería interna**
 - Puede validar avances de aprendices y contribuir con certificaciones
 
----
-
-### 👑 Admin (solo backend)
+### 👑 Admin - **🔒 Solo en backend**
 
 - Administra completamente:
   - Cursos: creación, edición y eliminación
@@ -179,55 +221,74 @@ Mentora implementa un sistema de control de acceso basado en roles para ofrecer 
   - Certificaciones: emisión y validación final
 - Controla acceso a endpoints y gestiona integridad de datos del sistema
 
----
+## 🧪 Instalación y Ejecución del Frontend
 
-## 🚀 Instalación y Ejecución del Proyecto (Frontend)
+### 📦 Requisitos Previos
 
-Sigue los siguientes pasos para correr la aplicación en modo de desarrollo:
+- Node.js 16+ 
+- npm o yarn
 
-### 🔽 1. Clonar el repositorio
+### 🔧 Pasos de Instalación
+
 ```bash
-# Clona el repositorio
+# 1. Clonar el repositorio
 git clone git@github.com:martindipeco/inquisitorius.git
-cd inquisitorius-feat/vista-registro
+cd inquisitorius
 
-# Instala dependencias
+# 2. Instalar dependencias
 npm install
 
-# Inicia el servidor de desarrollo
+# 3. Iniciar el servidor de desarrollo
 npm run dev
 ```
+
+### 🛠️ Scripts Disponibles
+
+```bash
+# Desarrollo
+npm run dev
+
+# Build de producción optimizado
+npm run build:prod
+
+# Preview del build de producción
+npm run preview:prod
+
+# Análisis del bundle
+npm run analyze
+
+# Build estándar
+npm run build
+
+# Linting
+npm run lint
+```
+
 ---
 
-## 🧩 Funcionalidades Implementadas en el Backend
+# ⚙️ BACKEND
+
+## 🧩 Funcionalidades Implementadas
 
 El backend de **Mentora** ofrece múltiples funcionalidades relacionadas con la gestión de cursos, mentorías y certificaciones. Estas están organizadas por módulos RESTful y protegidas por roles definidos (`ADMIN`, `MENTOR`, `USER`).
 
----
-
-### 📚 Cursos
+### 📚 Gestión de Cursos
 
 - Crear, listar, editar y eliminar cursos
 - Asignar mentorías a cursos
 - Manejar niveles del curso: `INICIAL`, `INTERMEDIO`, `AVANZADO`
 
----
-
-### 🤝 Mentorías
+### 🤝 Gestión de Mentorías
 
 - Crear mentorías entre usuarios
 - Asociar mentor y aprendiz a un curso
 - Manejar estados de una mentoría:  
   `EN_CURSO`, `FINALIZADA`, `CANCELADA`
 
----
-
-### 🏅 Certificaciones
+### 🏅 Gestión de Certificaciones
 
 - Registrar certificaciones con nombre, institución y fecha
 - Asociar cada certificación a un usuario validado
-
----
 
 ### 🔐 Seguridad y Control de Accesos
 
@@ -236,9 +297,7 @@ El backend de **Mentora** ofrece múltiples funcionalidades relacionadas con la 
 - Uso de anotaciones `@PreAuthorize` en controladores
 - Protección de endpoints según el perfil del usuario
 
----
-
-### 🌐 Endpoints REST por Módulo
+## 🔁 Endpoints REST por Módulo
 
 | Módulo            | Método | Ruta                             | Roles Autorizados   |
 |-------------------|--------|----------------------------------|---------------------|
@@ -255,8 +314,6 @@ El backend de **Mentora** ofrece múltiples funcionalidades relacionadas con la 
 |                   | PUT    | `/api/certificaciones/{id}`      | ADMIN, MENTOR       |
 |                   | DELETE | `/api/certificaciones/{id}`      | ADMIN               |
 
----
-
 ### ✅ Acciones Protegidas por Rol
 
 | Módulo          | Roles Autorizados | Acciones Protegidas                |
@@ -265,19 +322,13 @@ El backend de **Mentora** ofrece múltiples funcionalidades relacionadas con la 
 | Mentorías       | ADMIN, MENTOR     | Crear, editar (solo ADMIN elimina)|
 | Certificaciones | ADMIN, MENTOR     | Crear, editar (solo ADMIN elimina)|
 
----
-
 Cada módulo utiliza:
 - **DTOs descriptivos** en español
 - **Validaciones semánticas** con `@Valid`
 
----
-
-## 🧪 Pruebas del Backend con Insomnia
+## 🧪 Pruebas del Backend
 
 Se utilizó **Insomnia** para validar los principales flujos de autenticación, autorización y manipulación de entidades. Las pruebas garantizan el correcto funcionamiento de los endpoints protegidos por roles y las validaciones de negocio.
-
----
 
 ### 🔍 Funcionalidades Probadas
 
@@ -290,65 +341,53 @@ Se utilizó **Insomnia** para validar los principales flujos de autenticación, 
   - Datos inválidos en solicitudes  
   - Acceso a rutas sin token o con token inválido  
 
----
-
-### 📎 Colección Insomnia
+### 📁 Colección Insomnia
 
 La colección completa de pruebas está disponible en el archivo:
 
-skillslink-insomnia.json
+`skillslink-insomnia.json`
 
 ---
 
-## 🔮 ¿Por qué destaca este proyecto?
+# 🌟 ¿Por qué destaca este proyecto?
 
 **Mentora** no solo propone una solución técnica funcional, sino que se consolida como una plataforma educativa con enfoque humano, modularidad tecnológica y escalabilidad.
 
----
-
-### 🧱 Arquitectura y Código
+## 🏗️ Arquitectura y Código
 
 - Código modular, organizado en componentes frontend y servicios backend.
 - Separación clara de responsabilidades: autenticación, datos, servicios, UI.
 - Uso de nombres descriptivos y DTOs en español para claridad semántica.
 - Controladores RESTful con buenas prácticas de seguridad y validación.
 
----
-
-### 📈 Escalabilidad y Mantenimiento
+## 📈 Escalabilidad y Mantenimiento
 
 - Diseño preparado para incorporar futuras funciones: notificaciones, foros, contenidos multimedia.
 - Uso de tecnologías ampliamente soportadas y bien documentadas.
 - Interoperabilidad entre frontend mockeado y backend real.
 
----
-
-### 🎓 Enfoque Pedagógico
+## 🎓 Enfoque Pedagógico
 
 - Mentores como agentes activos en el proceso formativo.
 - Seguimiento del progreso mediante certificaciones y registros.
 - Incentivos visuales para mantener la motivación del estudiante.
 
----
-
-### 🔐 Seguridad y Control
+## 🔐 Seguridad y Control
 
 - Autenticación con JWT.
 - Rutas protegidas en frontend y backend según roles (`USER`, `MENTOR`, `ADMIN`).
 - Uso de `@PreAuthorize` para control de permisos en los endpoints.
 - Validaciones con `@Valid` para asegurar calidad y consistencia de datos.
 
----
-
-### 💬 Experiencia de Usuario
+## 💬 Experiencia de Usuario
 
 - Interfaz clara, amigable y adaptable gracias a TailwindCSS.
 - Navegación fluida tipo SPA con rutas protegidas por rol.
 - Mensajería interna simulada para fomentar la interacción mentor-estudiante.
 - Diseño responsivo, visualmente atractivo y coherente en todo el sistema.
+- Sistema de notificaciones Toast para mejor feedback del usuario.
+- Componentes animados para una experiencia más dinámica.
 
 ---
 
 Este proyecto demuestra cómo la tecnología puede articularse con un enfoque formativo para construir plataformas educativas sólidas, justas y centradas en el aprendizaje significativo.
-
----
