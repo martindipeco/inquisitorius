@@ -87,32 +87,87 @@ npm run lint
 
 ```
 src/
-├── assets/           # Recursos estáticos (imágenes, fuentes, etc.)
-├── components/       # Componentes React reutilizables
+├── components/           # Componentes React reutilizables
+│   ├── chat/            # Componentes del sistema de chat
+│   │   ├── Chat.tsx
+│   │   ├── ChatWindow.tsx
+│   │   ├── ConversationList.tsx
+│   │   ├── MessageBubble.tsx
+│   │   ├── MessageInput.tsx
+│   │   └── index.ts
+│   ├── configuraciones/ # Componentes de configuración
+│   │   ├── CertificationsContent.tsx
+│   │   ├── EditProfileContent.tsx
+│   │   ├── MyCoursesContent.tsx
+│   │   ├── NotificationsContent.tsx
+│   │   └── SecurityContent.tsx
+│   ├── Toast/           # Sistema de notificaciones
+│   │   ├── Toast.tsx
+│   │   ├── ToastContainer.tsx
+│   │   ├── ToastExample.tsx
+│   │   └── ToastProvider.tsx
+│   ├── AnimatedContent.tsx
+│   ├── AnimatedText.tsx
+│   ├── AuthAlert.tsx
 │   ├── Button.tsx
+│   ├── ConfirmationModal.tsx
 │   ├── Curso.tsx
+│   ├── DropdownMenu.tsx
 │   ├── Footer.tsx
+│   ├── ImageUpload.tsx
 │   ├── ImageWithFallback.tsx
 │   ├── Input.tsx
 │   ├── Navbar.tsx
-│   └── SocialButton.tsx
-├── mocks/            # Datos de prueba para simular APIs
-│   └── cursos.json
-├── pages/            # Componentes que representan páginas completas
+│   ├── ScrollAnimation.tsx
+│   ├── SocialButton.tsx
+│   ├── TabNavigation.tsx
+│   └── WelcomeNavbar.tsx
+├── contexts/            # Contextos de React para estado global
+│   ├── AuthContext.tsx
+│   ├── AuthContextDef.ts
+│   └── ToastContext.tsx
+├── hooks/               # Custom hooks personalizados
+│   ├── useAuth.ts
+│   ├── useAuthContext.ts
+│   └── useToast.ts
+├── mocks/               # Datos de prueba para simular APIs
+│   ├── certifications.json
+│   ├── cursos.json
+│   ├── enrolledCourses.json
+│   ├── messages.json
+│   └── users.json
+├── pages/               # Componentes que representan páginas completas
+│   ├── AboutPage.tsx
+│   ├── ChatPage.tsx
+│   ├── ConfiguracionesPage.tsx
+│   ├── HelpPage.tsx
 │   ├── HomePage.tsx
 │   ├── LoginPage.tsx
-│   └── NotFoundPage.tsx
-├── routes/           # Lógica y configuración de enrutamiento
+│   ├── NotFoundPage.tsx
+│   ├── RegisterPage.tsx
+│   └── WelcomePage.tsx
+├── routes/              # Lógica y configuración de enrutamiento
 │   ├── index.tsx
 │   ├── ProtectedRoute.tsx
+│   ├── README.md
 │   └── routes.ts
-├── services/         # Lógica para interactuar con APIs externas
-│   └── cursosService.ts
-├── types/            # Definiciones de tipos y esquemas de TypeScript
-│   └── loginSchema.ts
-├── App.tsx           # Componente raíz de la aplicación
-├── index.css         # Estilos globales y de Tailwind
-└── main.tsx          # Punto de entrada principal de la aplicación
+├── services/            # Lógica para interactuar con APIs externas
+│   ├── authService.ts
+│   ├── certificationService.ts
+│   ├── cursosService.ts
+│   ├── messageService.ts
+│   ├── registerService.ts
+│   └── userService.ts
+├── types/               # Definiciones de tipos y esquemas de TypeScript
+│   ├── certificationSchema.ts
+│   ├── loginSchema.ts
+│   ├── messageSchema.ts
+│   ├── profileSchema.ts
+│   └── registerSchema.ts
+├── App.tsx              # Componente raíz de la aplicación
+├── index.css            # Estilos globales y de Tailwind
+├── main.tsx             # Punto de entrada principal de la aplicación
+└── vite-env.d.ts        # Tipos de Vite
 ```
 
 ## 📦 Dependencias Principales
