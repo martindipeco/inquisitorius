@@ -26,8 +26,8 @@ export const EditProfileContent = () => {
     if (user) {
       // Convertir los datos del usuario autenticado al formato del formulario
       const profileData: ProfileFormData = {
-        login: user.nombre || '',
-        clave: '' // No cargamos la contraseña por seguridad
+        usuario: user.nombre || '',
+        password: '' // No cargamos la contraseña por seguridad
       };
       
       methods.reset(profileData);
@@ -69,8 +69,8 @@ export const EditProfileContent = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            login: formDataToSubmit.login,
-            clave: formDataToSubmit.clave
+            usuario: formDataToSubmit.usuario,
+            password: formDataToSubmit.password
           }),
         });
 
@@ -144,17 +144,17 @@ export const EditProfileContent = () => {
               <Input
                 label="Nombre de Usuario"
                 type="text"
-                {...methods.register('login')}
-                error={methods.formState.errors.login?.message}
+                {...methods.register('usuario')}
+                error={methods.formState.errors.usuario?.message}
                 placeholder="Ingresa tu nombre de usuario"
               />
 
               <Input
                 label="Contraseña"
                 type="password"
-                {...methods.register('clave')}
-                error={methods.formState.errors.clave?.message}
-                placeholder="Ingresa tu nueva contraseña (solo números)"
+                {...methods.register('password')}
+                error={methods.formState.errors.password?.message}
+                placeholder="Ingresa tu nueva contraseña (letras y números)"
               />
             </div>
 
