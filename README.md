@@ -4,7 +4,7 @@
 
 **Mentora** es una plataforma educativa integral que conecta estudiantes y mentores mediante un entorno digital seguro y colaborativo. 
 
-- [🌐 App en producción)](https://pruebamentora.netlify.app/)
+- [🌐 App en producción](https://pruebamentora.netlify.app/)
 - [📑 API desplegada](https://inquisitorius.onrender.com/)
 
 El sistema está dividido en dos partes:
