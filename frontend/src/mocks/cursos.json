@@ -1,0 +1,58 @@
+{
+  "cursos": [
+    {
+      "id": "1",
+      "nombre": "React Fundamentals",
+      "descripcion": "Aprende los fundamentos de React, incluyendo componentes, props, estado y hooks. Este curso te llevará desde principiante hasta intermedio en el desarrollo con React.",
+      "profesor": "María González",
+      "duracion": 24,
+      "imagen": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
+      "logoCurso": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+    },
+    {
+      "id": "2",
+      "nombre": "TypeScript Avanzado",
+      "descripcion": "Domina TypeScript con patrones avanzados, tipos genéricos, decoradores y mejores prácticas para proyectos empresariales.",
+      "profesor": "Carlos Rodríguez",
+      "duracion": 32,
+      "imagen": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=face",
+      "logoCurso": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+    },
+    {
+      "id": "3",
+      "nombre": "Node.js Backend",
+      "descripcion": "Construye APIs robustas con Node.js, Express y MongoDB. Aprende autenticación, autorización y despliegue en producción.",
+      "profesor": "Ana Martínez",
+      "duracion": 28,
+      "imagen": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
+      "logoCurso": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+    },
+    {
+      "id": "4",
+      "nombre": "UI/UX Design",
+      "descripcion": "Diseña interfaces de usuario intuitivas y experiencias de usuario excepcionales. Aprende Figma, prototipado y testing de usabilidad.",
+      "profesor": "Luis Fernández",
+      "duracion": 20,
+      "imagen": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+      "logoCurso": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg"
+    },
+    {
+      "id": "5",
+      "nombre": "DevOps Essentials",
+      "descripcion": "Introducción a DevOps con Docker, CI/CD, AWS y monitoreo. Automatiza el despliegue y mejora la calidad del código.",
+      "profesor": "Sofia López",
+      "duracion": 36,
+      "imagen": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+      "logoCurso": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+    },
+    {
+      "id": "6",
+      "nombre": "Machine Learning Básico",
+      "descripcion": "Introducción al machine learning con Python, scikit-learn y TensorFlow. Aprende algoritmos fundamentales y aplicaciones prácticas.",
+      "profesor": "Diego Silva",
+      "duracion": 40,
+      "imagen": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+      "logoCurso": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+    }
+  ]
+} 
