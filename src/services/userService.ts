@@ -147,8 +147,8 @@ class UserService {
       const currentUser = (usersData as MockUser[])[userIndex];
       const updatedUser = {
         id: currentUser.id.toString(),
-        nombre: data.login || currentUser.nombre || '',
-        email: data.login, // Usar login como email
+        nombre: data.usuario || currentUser.nombre || '',
+        email: data.usuario, // Usar usuario como email
         bio: '',
         avatarUrl: undefined
       };
