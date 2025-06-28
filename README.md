@@ -2,7 +2,12 @@
 
 # Plataforma de Mentoría y Certificación
 
-**Mentora** es una plataforma educativa integral que conecta estudiantes y mentores mediante un entorno digital seguro y colaborativo. El sistema está dividido en dos partes:
+**Mentora** es una plataforma educativa integral que conecta estudiantes y mentores mediante un entorno digital seguro y colaborativo. 
+
+- [🌐 App en producción)](https://pruebamentora.netlify.app/)
+- [📑 API desplegada](https://inquisitorius.onrender.com/)
+
+El sistema está dividido en dos partes:
 
 - **Frontend SPA** desarrollado con **React + TypeScript + Vite**, enfocado en la experiencia del usuario.
 - **Backend** desarrollado con **Java + Spring Boot**, orientado a la gestión académica, mentorías y certificaciones.
