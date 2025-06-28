@@ -142,7 +142,7 @@ export const Chat = ({ currentUserId }: ChatProps) => {
     <div className="h-full bg-white rounded-lg shadow-sm overflow-hidden">
       <div className="flex h-full">
         {/* Conversation List - Hidden on mobile when chat is open */}
-        <div className={`${showConversationList ? 'block' : 'hidden'} md:block h-full`}>
+        <div className={`${showConversationList ? 'block' : 'hidden'} md:block h-full w-full md:w-80 lg:w-96 flex-shrink-0`}>
           <ConversationList
             conversations={conversations}
             currentUserId={currentUserId}
@@ -154,7 +154,7 @@ export const Chat = ({ currentUserId }: ChatProps) => {
         </div>
 
         {/* Chat Window */}
-        <div className={`${!showConversationList ? 'block' : 'hidden'} md:block flex-1 h-full`}>
+        <div className={`${!showConversationList ? 'block' : 'hidden'} md:block flex-1 h-full min-w-0`}>
           {selectedConversation ? (
             <ChatWindow
               conversation={selectedConversation}
@@ -164,15 +164,15 @@ export const Chat = ({ currentUserId }: ChatProps) => {
             />
           ) : (
             <div 
-              className="flex flex-col items-center justify-center h-full text-gray-500 cursor-pointer hover:text-gray-700 transition-colors"
+              className="flex flex-col items-center justify-center h-full text-gray-500 cursor-pointer hover:text-gray-700 transition-colors p-4"
               onClick={handleNewConversationInfo}
             >
-              <div className="text-6xl mb-4">
+              <div className="text-4xl sm:text-6xl mb-4">
                 <span role="img" aria-label="chat">💬</span>
               </div>
-              <h3 className="text-xl font-medium mb-2">Selecciona una conversación</h3>
-              <p className="text-sm">Elige una conversación para comenzar a chatear</p>
-              <p className="text-xs mt-2 text-blue-500">Haz clic aquí para más información</p>
+              <h3 className="text-lg sm:text-xl font-medium mb-2 text-center">Selecciona una conversación</h3>
+              <p className="text-sm text-center">Elige una conversación para comenzar a chatear</p>
+              <p className="text-xs mt-2 text-blue-500 text-center">Haz clic aquí para más información</p>
             </div>
           )}
         </div>

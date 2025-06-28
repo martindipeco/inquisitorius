@@ -116,11 +116,11 @@ export const Navbar = ({
         </div>
 
         {/* Navigation Items */}
-        <div className="hidden md:flex items-center space-x-4">
-          {/* Chat/Mensajes */}
+        <div className="flex items-center space-x-2 sm:space-x-4">
+          {/* Chat/Mensajes - Visible en todas las pantallas */}
           <button
             onClick={handleChatClick}
-            className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 relative ${
+            className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 relative ${
               isChatActive 
                 ? 'bg-blue-50 text-blue-600' 
                 : 'hover:bg-gray-100 text-gray-700'
@@ -128,24 +128,24 @@ export const Navbar = ({
             title="Mensajes"
           >
             <Icon icon="mdi:chat-outline" className="text-lg" />
-            <span className="font-medium">Mensajes</span>
+            <span className="font-medium text-sm sm:text-base hidden sm:inline">Mensajes</span>
             {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 px-2 py-1 text-xs bg-red-500 text-white rounded-full min-w-[20px] text-center">
+              <span className="absolute -top-1 -right-1 px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs bg-red-500 text-white rounded-full min-w-[16px] sm:min-w-[20px] text-center">
                 {unreadCount > 99 ? '99+' : unreadCount}
               </span>
             )}
           </button>
 
-          {/* User Info */}
-          <div className="flex items-center space-x-2 px-3 py-2 text-gray-700">
+          {/* User Info - Solo visible en desktop */}
+          <div className="hidden md:flex items-center space-x-2 px-3 py-2 text-gray-700">
             <Icon icon="mdi:account-circle" className="text-lg" />
             <span className="font-medium text-sm">
               {user?.rol}
             </span>
           </div>
 
-          {/* Desktop Menu Button */}
-          <div className="relative">
+          {/* Desktop Menu Button - Solo visible en desktop */}
+          <div className="hidden md:block relative">
             <button 
               className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -167,35 +167,30 @@ export const Navbar = ({
               onLogout={handleLogout}
             />
           </div>
-        </div>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden relative">
-          <button 
-            className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-            <span className="text-gray-700 font-medium">Menú</span>
-            {unreadCount > 0 && (
-              <span className="px-2 py-1 text-xs bg-red-500 text-white rounded-full min-w-[20px] text-center">
-                {unreadCount > 99 ? '99+' : unreadCount}
-              </span>
-            )}
-          </button>
+          {/* Mobile Menu Button */}
+          <div className="md:hidden relative">
+            <button 
+              className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+              <span className="text-gray-700 font-medium">Menú</span>
+            </button>
 
-          <DropdownMenu
-            isOpen={isMenuOpen}
-            cursos={cursos}
-            onCursoSelect={onCursoSelect}
-            onClose={() => setIsMenuOpen(false)}
-            onConfiguracionesClick={handleConfiguracionesClick}
-            onAboutClick={handleAboutClick}
-            onHelpClick={handleHelpClick}
-            onLogout={handleLogout}
-          />
+            <DropdownMenu
+              isOpen={isMenuOpen}
+              cursos={cursos}
+              onCursoSelect={onCursoSelect}
+              onClose={() => setIsMenuOpen(false)}
+              onConfiguracionesClick={handleConfiguracionesClick}
+              onAboutClick={handleAboutClick}
+              onHelpClick={handleHelpClick}
+              onLogout={handleLogout}
+            />
+          </div>
         </div>
       </div>
     </nav>

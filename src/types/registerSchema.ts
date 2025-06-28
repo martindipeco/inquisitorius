@@ -8,8 +8,9 @@ export const registerSchema = z.object({
   password: z
     .string()
     .nonempty('La contraseña es obligatoria')
-    .regex(/^\d+$/, 'La contraseña debe ser solo números')
-    .min(1, 'La contraseña debe tener al menos 1 número'),
+    .min(6, 'La contraseña debe tener al menos 6 caracteres')
+    .max(12, 'La contraseña debe tener máximo 12 caracteres')
+    .regex(/^[a-zA-Z0-9]+$/, 'La contraseña debe contener solo letras y números'),
   confirmPassword: z
     .string()
     .nonempty('Debes confirmar la contraseña'),

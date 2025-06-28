@@ -13,7 +13,7 @@ export const ToastProvider = ({ children }: ToastProviderProps) => {
       <ToastPrimitive.Provider>
         {children}
         <ToastContainer />
-        <ToastPrimitive.Viewport className="fixed top-4 right-4 z-50 flex flex-col gap-2 w-full max-w-sm" />
+        <ToastPrimitive.Viewport className="fixed top-4 right-2 sm:right-4 z-50 flex flex-col gap-2 w-[calc(100vw-1rem)] sm:w-full max-w-sm" />
       </ToastPrimitive.Provider>
     </ToastContextProvider>
   );

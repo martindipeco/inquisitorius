@@ -72,36 +72,38 @@ export const MyCoursesContent = () => {
       </div>
 
       {courses.length === 0 ? (
-        <div className="bg-white p-8 rounded-lg border border-gray-200 text-center">
-          <Icon icon="mdi:book-open-variant" className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No tienes cursos inscritos</h3>
-          <p className="text-gray-500 mb-4">Explora nuestro catálogo y encuentra el curso perfecto para ti.</p>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+        <div className="bg-white p-4 sm:p-8 rounded-lg border border-gray-200 text-center">
+          <Icon icon="mdi:book-open-variant" className="mx-auto h-8 w-8 sm:h-12 sm:w-12 text-gray-400 mb-4" />
+          <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2">No tienes cursos inscritos</h3>
+          <p className="text-sm text-gray-500 mb-4">Explora nuestro catálogo y encuentra el curso perfecto para ti.</p>
+          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm">
             Explorar Cursos
           </button>
         </div>
       ) : (
         <div className="space-y-4">
           {courses.map((course) => (
-            <div key={course.id} className="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-              <div className="flex items-start space-x-4">
+            <div key={course.id} className="bg-white p-4 sm:p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+              <div className="flex flex-col sm:flex-row sm:items-start space-y-4 sm:space-y-0 sm:space-x-4">
                 {/* Logo del curso */}
-                <ImageWithFallback
-                  src={course.logoCurso}
-                  alt={`Logo de ${course.nombre}`}
-                  size="md"
-                  shape="rounded"
-                  skeletonClassName="border border-gray-200"
-                />
+                <div className="flex justify-center sm:justify-start">
+                  <ImageWithFallback
+                    src={course.logoCurso}
+                    alt={`Logo de ${course.nombre}`}
+                    size="md"
+                    shape="rounded"
+                    skeletonClassName="border border-gray-200"
+                  />
+                </div>
 
                 {/* Información del curso */}
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between mb-2">
-                    <div>
-                      <h4 className="text-lg font-semibold text-gray-900">{course.nombre}</h4>
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-2 space-y-2 sm:space-y-0">
+                    <div className="flex-1">
+                      <h4 className="text-base sm:text-lg font-semibold text-gray-900">{course.nombre}</h4>
                       <p className="text-sm text-gray-600">Prof. {course.profesor}</p>
                     </div>
-                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(course.estado)}`}>
+                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(course.estado)} self-start sm:self-auto`}>
                       {getStatusText(course.estado)}
                     </span>
                   </div>
@@ -123,7 +125,7 @@ export const MyCoursesContent = () => {
                   </div>
 
                   {/* Información adicional */}
-                  <div className="flex items-center space-x-6 text-sm text-gray-500">
+                  <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-6 text-sm text-gray-500">
                     <div className="flex items-center space-x-1">
                       <Icon icon="mdi:clock-outline" className="w-4 h-4" />
                       <span>{course.duracion} horas</span>
@@ -136,11 +138,11 @@ export const MyCoursesContent = () => {
                 </div>
 
                 {/* Acciones */}
-                <div className="flex flex-col space-y-2">
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                <div className="flex flex-row sm:flex-col space-x-2 sm:space-x-0 sm:space-y-2">
+                  <button className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                     Continuar
                   </button>
-                  <button className="text-gray-600 hover:text-gray-800 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                  <button className="flex-1 sm:flex-none text-gray-600 hover:text-gray-800 px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-gray-300 sm:border-0">
                     Ver Detalles
                   </button>
                 </div>

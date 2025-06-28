@@ -176,7 +176,7 @@ export const HomePage = () => {
         {/* Contenido principal */}
         <div className="max-w-7xl mx-auto px-4 py-8 content-visibility-auto">
           {/* Sección de cursos - Altura mínima para evitar layout shifts */}
-          <section className="min-h-[600px] layout-stable">
+          <section className="min-h-[300px] layout-stable">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl font-bold text-gray-900">
                 Cursos Disponibles

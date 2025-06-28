@@ -17,7 +17,7 @@ const toastVariants = {
     opacity: 0, 
     y: 50, 
     scale: 0.8,
-    x: 100
+    x: 50
   },
   animate: { 
     opacity: 1, 
@@ -35,7 +35,7 @@ const toastVariants = {
     opacity: 0, 
     y: -20, 
     scale: 0.9,
-    x: 100,
+    x: 50,
     transition: {
       type: "spring" as const,
       stiffness: 500,
@@ -46,7 +46,7 @@ const toastVariants = {
 };
 
 const getToastStyles = (type: ToastProps['type'], isShaking: boolean) => {
-  const baseStyles = "flex items-start space-x-3 p-4 rounded-lg shadow-lg border-l-4";
+  const baseStyles = "flex items-start space-x-2 sm:space-x-3 p-3 sm:p-4 rounded-lg shadow-lg border-l-4";
   const shakeClass = isShaking ? "animate-shake" : "";
   
   switch (type) {
@@ -158,7 +158,7 @@ export const Toast = ({
             
             <Icon 
               icon={getIcon(type)} 
-              className={`w-5 h-5 mt-0.5 flex-shrink-0 ${
+              className={`w-4 h-4 sm:w-5 sm:h-5 mt-0.5 flex-shrink-0 ${
                 type === 'error' ? 'text-red-500' :
                 type === 'success' ? 'text-green-500' :
                 type === 'warning' ? 'text-yellow-500' :
@@ -166,17 +166,17 @@ export const Toast = ({
               }`} 
             />
             <div className="flex-1 min-w-0">
-              <ToastPrimitive.Title className="text-sm font-semibold">
+              <ToastPrimitive.Title className="text-xs sm:text-sm font-semibold">
                 {title}
               </ToastPrimitive.Title>
               {description && (
-                <ToastPrimitive.Description className="text-sm mt-1 opacity-90">
+                <ToastPrimitive.Description className="text-xs sm:text-sm mt-1 opacity-90">
                   {description}
                 </ToastPrimitive.Description>
               )}
             </div>
-            <ToastPrimitive.Close className="ml-4 flex-shrink-0">
-              <Icon icon="mdi:close" className="w-4 h-4 opacity-70 hover:opacity-100" />
+            <ToastPrimitive.Close className="ml-2 sm:ml-4 flex-shrink-0">
+              <Icon icon="mdi:close" className="w-3 h-3 sm:w-4 sm:h-4 opacity-70 hover:opacity-100" />
             </ToastPrimitive.Close>
           </motion.div>
         )}

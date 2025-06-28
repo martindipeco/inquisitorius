@@ -41,14 +41,6 @@ export const DropdownMenu = ({
         <span>Configuraciones</span>
       </button>
 
-      {/* Temas */}
-      <button className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 rounded hover:bg-gray-100 cursor-pointer w-full text-left">
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
-        </svg>
-        <span>Temas</span>
-      </button>
-
       <div className="h-px bg-gray-200 my-1" />
 
       {/* Cursos */}
