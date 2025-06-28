@@ -54,13 +54,6 @@ Este repositorio busca fomentar el aprendizaje significativo, la trazabilidad de
 
 ---
 
-## 🔗 Recursos en línea
-
-- [🌐 Frontend (Netlify)](https://pruebamentora.netlify.app/)
-- [📑 Swagger UI – Documentación de la API](https://inquisitorius.onrender.com/swagger-ui/index.html)
-  
----
-
 # 🎨 FRONTEND
 
 ## 🗂️ Estructura del Proyecto Frontend
